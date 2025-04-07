@@ -20,7 +20,7 @@
             </Grid.RowDefinitions>
 
             <Button Grid.Row="0" Content="Add" Margin="0,0,0,5" VerticalAlignment="Top"/>
-            <ListBox Grid.Row="1"/>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Services}" DisplayMemberPath="Name"/>
             <Button Grid.Row="2" Content="Delete" Margin="0,5,0,0" VerticalAlignment="Top"/>
         </Grid>
 
