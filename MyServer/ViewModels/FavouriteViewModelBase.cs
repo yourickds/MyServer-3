@@ -8,6 +8,7 @@ namespace MyServer.ViewModels
         private string? _name;
         private string? _filePath;
         private string? _arguments;
+        private bool _inBrowser;
 
         public string? Name
         {
@@ -25,6 +26,12 @@ namespace MyServer.ViewModels
         {
             get => _arguments;
             set { _arguments = value; OnPropertyChanged(); }
+        }
+
+        public bool InBrowser
+        {
+            get => _inBrowser;
+            set { _inBrowser = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

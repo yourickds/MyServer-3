@@ -9,5 +9,7 @@
         public required string FilePath { get; set; }
 
         public string? Arguments { get; set; }
+
+        public bool InBrowser { get; set; }
     }
 }

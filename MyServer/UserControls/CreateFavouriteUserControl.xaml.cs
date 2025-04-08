@@ -47,6 +47,7 @@ namespace MyServer.UserControls
                 Name = _viewModel.Name,
                 FilePath = _viewModel.FilePath,
                 Arguments = _viewModel.Arguments,
+                InBrowser = _viewModel.InBrowser,
             };
 
             // Проверяем перед добавлением

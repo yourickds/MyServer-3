@@ -57,6 +57,7 @@ namespace MyServer.UserControls
             SelectedFavourite.Name = _viewModel.Name;
             SelectedFavourite.FilePath = _viewModel.FilePath;
             SelectedFavourite.Arguments = _viewModel.Arguments;
+            SelectedFavourite.InBrowser = _viewModel.InBrowser;
 
             FavouriteStore.Instance.UpdateFavourite(SelectedFavourite);
             MessageBox.Show("Update Favourite");

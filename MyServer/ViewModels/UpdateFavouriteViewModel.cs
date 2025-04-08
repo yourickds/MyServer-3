@@ -12,6 +12,7 @@ namespace MyServer.ViewModels
             Name = SelectedFavourite.Name;
             FilePath = SelectedFavourite.FilePath;
             Arguments = SelectedFavourite.Arguments;
+            InBrowser = SelectedFavourite.InBrowser;
         }
     }
 }

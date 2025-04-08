@@ -25,6 +25,8 @@
             <Label Content="Arguments" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
             <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Arguments}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
 
+            <CheckBox Content="Startup in Browser" HorizontalAlignment="Left" Margin="0,0,0,5" VerticalAlignment="Top" IsChecked="{Binding InBrowser}"/>
+            
             <Button Content="Create" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="CreateFavourite"/>
         </StackPanel>
     </Grid>
