@@ -10,6 +10,10 @@
         <StackPanel VerticalAlignment="Top" Margin="5">
             <Label Content="Name" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
             <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+
+            <Label Content="Modules" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <ComboBox Margin="0,0,0,5" ItemsSource="{Binding Modules}" DisplayMemberPath="Name"/>
+            
             <Button Content="Update" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="UpdateProfile"/>
         </StackPanel>
     </Grid>
