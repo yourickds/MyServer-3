@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MyServer.UserControls.CreateFavouriteUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyServer.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid Background="White">
+        <StackPanel VerticalAlignment="Top" Margin="5">
+            <Label Content="Name" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+
+            <Label Content="FilePath" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding FilePath}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+                <Button Grid.Column="1" Content="Change" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="OpenDialogFilePath"/>
+            </Grid>
+
+            <Label Content="Arguments" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Arguments}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+
+            <Button Content="Create" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="CreateFavourite"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

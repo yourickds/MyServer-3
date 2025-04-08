@@ -1,28 +1,28 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
-using MyServer.ViewModels;
+using Microsoft.Win32;
 using MyServer.Models;
 using MyServer.Stores;
-using Microsoft.Win32;
-using System.IO;
+using MyServer.ViewModels;
 
 namespace MyServer.UserControls
 {
     /// <summary>
-    /// Логика взаимодействия для CreateServiceUserControl.xaml
+    /// Логика взаимодействия для CreateFavouriteUserControl.xaml
     /// </summary>
-    public partial class CreateServiceUserControl : UserControl
+    public partial class CreateFavouriteUserControl : UserControl
     {
-        private readonly CreateServiceViewModel _viewModel;
+        private readonly CreateFavouriteViewModel _viewModel;
 
-        public CreateServiceUserControl()
+        public CreateFavouriteUserControl()
         {
             InitializeComponent();
-            _viewModel = new CreateServiceViewModel();
+            _viewModel = new CreateFavouriteViewModel();
             DataContext = _viewModel;
         }
 
-        private void CreateService(object sender, System.Windows.RoutedEventArgs e)
+        private void CreateFavourite(object sender, System.Windows.RoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(_viewModel.Name))
             {
@@ -35,30 +35,29 @@ namespace MyServer.UserControls
                 MessageBox.Show("Field `FilePath` is required");
                 return;
             }
-            
+
             if (!File.Exists(_viewModel.FilePath))
             {
                 MessageBox.Show("File Not Found in `FilePath`");
                 return;
             }
 
-            Service newService = new()
+            Favourite newFavourite = new()
             {
                 Name = _viewModel.Name,
                 FilePath = _viewModel.FilePath,
                 Arguments = _viewModel.Arguments,
-                Startup = _viewModel.Startup
             };
 
             // Проверяем перед добавлением
-            if (ServiceStore.Instance.Services.Any(s => s.Name == newService.Name))
+            if (FavouriteStore.Instance.Favourites.Any(s => s.Name == newFavourite.Name))
             {
                 MessageBox.Show("Name already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return; // Прерываем выполнение
             }
 
-            ServiceStore.Instance.AddService(newService);
-            MessageBox.Show("Added Service");
+            FavouriteStore.Instance.AddFavourite(newFavourite);
+            MessageBox.Show("Added Favourite");
         }
 
         private void OpenDialogFilePath(object sender, RoutedEventArgs e)

@@ -1,28 +1,31 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
-using MyServer.ViewModels;
+using Microsoft.Win32;
 using MyServer.Models;
 using MyServer.Stores;
-using Microsoft.Win32;
-using System.IO;
+using MyServer.ViewModels;
 
 namespace MyServer.UserControls
 {
     /// <summary>
-    /// Логика взаимодействия для CreateServiceUserControl.xaml
+    /// Логика взаимодействия для UpdateFavouriteUserControl.xaml
     /// </summary>
-    public partial class CreateServiceUserControl : UserControl
+    public partial class UpdateFavouriteUserControl : UserControl
     {
-        private readonly CreateServiceViewModel _viewModel;
+        private readonly UpdateFavouriteViewModel _viewModel;
 
-        public CreateServiceUserControl()
+        private Favourite SelectedFavourite;
+
+        public UpdateFavouriteUserControl(Favourite selectedFavourite)
         {
             InitializeComponent();
-            _viewModel = new CreateServiceViewModel();
+            _viewModel = new UpdateFavouriteViewModel(selectedFavourite);
+            this.SelectedFavourite = selectedFavourite;
             DataContext = _viewModel;
         }
 
-        private void CreateService(object sender, System.Windows.RoutedEventArgs e)
+        private void UpdateFavourite(object sender, System.Windows.RoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(_viewModel.Name))
             {
@@ -35,30 +38,28 @@ namespace MyServer.UserControls
                 MessageBox.Show("Field `FilePath` is required");
                 return;
             }
-            
+
             if (!File.Exists(_viewModel.FilePath))
             {
                 MessageBox.Show("File Not Found in `FilePath`");
                 return;
             }
 
-            Service newService = new()
-            {
-                Name = _viewModel.Name,
-                FilePath = _viewModel.FilePath,
-                Arguments = _viewModel.Arguments,
-                Startup = _viewModel.Startup
-            };
+            bool nameExists = FavouriteStore.Instance.Favourites
+                .Any(s => s.Name == _viewModel.Name && s.Id != SelectedFavourite.Id);
 
-            // Проверяем перед добавлением
-            if (ServiceStore.Instance.Services.Any(s => s.Name == newService.Name))
+            if (nameExists)
             {
                 MessageBox.Show("Name already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return; // Прерываем выполнение
             }
 
-            ServiceStore.Instance.AddService(newService);
-            MessageBox.Show("Added Service");
+            SelectedFavourite.Name = _viewModel.Name;
+            SelectedFavourite.FilePath = _viewModel.FilePath;
+            SelectedFavourite.Arguments = _viewModel.Arguments;
+
+            FavouriteStore.Instance.UpdateFavourite(SelectedFavourite);
+            MessageBox.Show("Update Favourite");
         }
 
         private void OpenDialogFilePath(object sender, RoutedEventArgs e)

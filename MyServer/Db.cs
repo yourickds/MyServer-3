@@ -6,6 +6,7 @@ namespace MyServer
     class Db: DbContext
     {
         public DbSet<Service> Services { get; set; }
+        public DbSet<Favourite> Favourites { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
