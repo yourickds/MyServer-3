@@ -3,28 +3,49 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MyServer.Models;
 using MyServer.Stores;
+using MyServer.UserControls;
 
 namespace MyServer.ViewModels
 {
     class ServiceViewModel: INotifyPropertyChanged
     {
-        private readonly ServiceStore _store;
+        private object _view = new CreateServiceUserControl();
 
-        private ObservableCollection<Service> _services = [];
+        private Service? _selectedService = null;
+
+        public ObservableCollection<Service> Services => ServiceStore.Instance.Services;
 
         public ServiceViewModel()
         {
-            _store = new ServiceStore();
-            Services = _store.GetAllServices();
+            _view = new CreateServiceUserControl();
+            ServiceStore.Instance.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(ServiceStore.Services))
+                {
+                    OnPropertyChanged(nameof(Services));
+                }
+            };
         }
 
-        public ObservableCollection<Service> Services
+        public object View
         {
-            get => _services;
+            get => _view;
             set
             {
-                _services = value;
+                _view = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public Service? SelectedService
+        {
+            get => _selectedService;
+            set
+            {
+                _selectedService = value;
+                View = _selectedService != null
+                    ? new UpdateServiceUserControl(_selectedService)
+                    : new CreateServiceUserControl();
             }
         }
 

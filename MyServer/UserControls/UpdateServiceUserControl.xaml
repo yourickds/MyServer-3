@@ -9,7 +9,7 @@
     <Grid Background="White">
         <StackPanel VerticalAlignment="Top" Margin="5">
             <Label Content="Name" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
-            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
 
             <Label Content="FilePath" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
             <Grid>
@@ -18,16 +18,16 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Margin="0,0,0,5" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
-                <Button Grid.Column="1" Content="Change" Margin="0,0,0,5" VerticalAlignment="Top" Height="22"/>
+                <TextBox Grid.Column="0" Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding FilePath}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+                <Button Grid.Column="1" Content="Change" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="OpenDialogFilePath"/>
             </Grid>
 
             <Label Content="Arguments" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
-            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Arguments}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
 
-            <CheckBox Content="On Startup" HorizontalAlignment="Left" Margin="0,0,0,5" VerticalAlignment="Top"/>
+            <CheckBox Content="On Startup" HorizontalAlignment="Left" Margin="0,0,0,5" VerticalAlignment="Top" IsChecked="{Binding Startup}"/>
 
-            <Button Content="Update" Margin="0,0,0,5" VerticalAlignment="Top" Height="22"/>
+            <Button Content="Update" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="UpdateService"/>
             
             <Button Content="Start/Stop" Margin="0,0,0,5" VerticalAlignment="Top" Height="22"/>
             <Button Content="Restart" Margin="0,0,0,5" VerticalAlignment="Top" Height="22"/>

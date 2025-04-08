@@ -1,6 +1,6 @@
 ﻿namespace MyServer.Models
 {
-    class Service
+    public class Service
     {
         public int Id { get; set; }
 
