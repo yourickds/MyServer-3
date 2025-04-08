@@ -19,7 +19,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Dir}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
-                <Button Grid.Column="1" Content="Change" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="OpenDialogFilePath"/>
+                <Button Grid.Column="1" Content="Change" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="OpenDialogDirectoryPath"/>
             </Grid>
 
             <Button Content="Update" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="UpdateModule"/>

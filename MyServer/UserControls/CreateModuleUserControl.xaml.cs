@@ -36,7 +36,7 @@ namespace MyServer.UserControls
                 return;
             }
 
-            if (!File.Exists(_viewModel.Dir))
+            if (!Directory.Exists(_viewModel.Dir))
             {
                 MessageBox.Show("Directory Not Found in `Dir`");
                 return;
@@ -59,16 +59,13 @@ namespace MyServer.UserControls
             MessageBox.Show("Added Module");
         }
 
-        private void OpenDialogFilePath(object sender, RoutedEventArgs e)
+        private void OpenDialogDirectoryPath(object sender, RoutedEventArgs e)
         {
-            // Создаем экземпляр OpenFileDialog
-            OpenFileDialog openFileDialog = new();
+            OpenFolderDialog openFolderDialog = new();
 
-            // Показываем диалог и проверяем, был ли выбран файл
-            if (openFileDialog.ShowDialog() == true)
+            if (openFolderDialog.ShowDialog() == true)
             {
-                // Если файл был выбран, обновляем текст в TextBox
-                _viewModel.Dir = openFileDialog.FileName;
+                _viewModel.Dir = openFolderDialog.FolderName;
             }
         }
     }
