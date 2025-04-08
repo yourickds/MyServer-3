@@ -28,9 +28,17 @@
             <CheckBox Content="On Startup" HorizontalAlignment="Left" Margin="0,0,0,5" VerticalAlignment="Top" IsChecked="{Binding Startup}"/>
 
             <Button Content="Update" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="UpdateService"/>
-            
-            <Button Content="Start/Stop" Margin="0,0,0,5" VerticalAlignment="Top" Height="22"/>
-            <Button Content="Restart" Margin="0,0,0,5" VerticalAlignment="Top" Height="22"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0" Content="Start/Stop" Margin="0,0,0,0" VerticalAlignment="Top" Height="22"/>
+                <Button Grid.Column="2" Content="Restart" Margin="0,0,0,0" VerticalAlignment="Top" Height="22"/>
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>
