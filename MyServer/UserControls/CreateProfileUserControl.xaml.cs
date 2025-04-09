@@ -31,6 +31,7 @@ namespace MyServer.UserControls
             Profile newProfile = new()
             {
                 Name = _viewModel.Name,
+                Modules = _viewModel.AppendModules
             };
 
             // Проверяем перед добавлением

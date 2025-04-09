@@ -10,6 +10,10 @@ namespace MyServer.ViewModels
         {
             SelectedProfile = selectedProfile;
             Name = SelectedProfile.Name;
+            foreach (Module module in selectedProfile.Modules)
+            {
+                AppendModules.Add(module);
+            }
         }
     }
 }

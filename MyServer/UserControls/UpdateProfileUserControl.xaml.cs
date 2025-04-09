@@ -41,6 +41,7 @@ namespace MyServer.UserControls
             }
 
             SelectedProfile.Name = _viewModel.Name;
+            SelectedProfile.Modules = _viewModel.AppendModules;
 
             ProfileStore.Instance.UpdateProfile(SelectedProfile);
             MessageBox.Show("Update Profile");

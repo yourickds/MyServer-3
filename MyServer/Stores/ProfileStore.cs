@@ -1,4 +1,5 @@
-﻿using MyServer.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyServer.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -19,7 +20,7 @@ namespace MyServer.Stores
         {
             _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
-            _profiles = new ObservableCollection<Profile>(_dbContext.Profiles.ToList());
+            _profiles = new ObservableCollection<Profile>(_dbContext.Profiles.Include(p => p.Modules).ToList());
         }
 
         public ObservableCollection<Profile> Profiles
@@ -59,7 +60,7 @@ namespace MyServer.Stores
 
         private void RefreshProfiles()
         {
-            Profiles = new ObservableCollection<Profile>(_dbContext.Profiles.ToList());
+            Profiles = new ObservableCollection<Profile>(_dbContext.Profiles.Include(p => p.Modules).ToList());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
