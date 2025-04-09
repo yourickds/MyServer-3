@@ -31,6 +31,12 @@ namespace MyServer.UserControls
                 return;
             }
 
+            if (_viewModel.SelectedProfile is null or not Profile)
+            {
+                MessageBox.Show("Field `Profile` is required");
+                return;
+            }
+
             bool nameExists = DomainStore.Instance.Domains
                 .Any(s => s.Name == _viewModel.Name && s.Id != SelectedDomain.Id);
 
@@ -42,6 +48,8 @@ namespace MyServer.UserControls
 
             SelectedDomain.Name = _viewModel.Name;
             SelectedDomain.DocumentRoot = _viewModel.DocumentRoot;
+            SelectedDomain.ProfileId = _viewModel.SelectedProfile.Id;
+            SelectedDomain.Profile = _viewModel.SelectedProfile;
 
             DomainStore.Instance.UpdateDomain(SelectedDomain);
             MessageBox.Show("Update Domain");

@@ -27,10 +27,18 @@ namespace MyServer.UserControls
                 return;
             }
 
+            if (_viewModel.SelectedProfile is null or not Profile)
+            {
+                MessageBox.Show("Field `Profile` is required");
+                return;
+            }
+
             Domain newDomain = new()
             {
                 Name = _viewModel.Name,
                 DocumentRoot = _viewModel.DocumentRoot,
+                ProfileId = _viewModel.SelectedProfile.Id,
+                Profile = _viewModel.SelectedProfile
             };
 
             // Проверяем перед добавлением

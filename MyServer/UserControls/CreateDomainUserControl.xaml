@@ -15,7 +15,7 @@
             <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding DocumentRoot}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
 
             <Label Content="Profile" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
-            <ComboBox Grid.Column="0" Margin="0,0,0,5"/>
+            <ComboBox Grid.Column="0" Margin="0,0,0,5" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}"/>
 
             <Button Content="Create" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="CreateDomain"/>
         </StackPanel>

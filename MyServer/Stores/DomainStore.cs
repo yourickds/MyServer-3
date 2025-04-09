@@ -19,7 +19,7 @@ namespace MyServer.Stores
         {
             _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
-            _domains = new ObservableCollection<Domain>(_dbContext.Domains.ToList());
+            _domains = new ObservableCollection<Domain>(_dbContext.Domains.Include(d => d.Profile).ToList());
         }
 
         public ObservableCollection<Domain> Domains
@@ -59,7 +59,7 @@ namespace MyServer.Stores
 
         private void RefreshDomains()
         {
-            Domains = new ObservableCollection<Domain>(_dbContext.Domains.ToList());
+            Domains = new ObservableCollection<Domain>(_dbContext.Domains.Include(d => d.Profile).ToList());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

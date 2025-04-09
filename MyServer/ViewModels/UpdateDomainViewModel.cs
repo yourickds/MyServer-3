@@ -11,6 +11,7 @@ namespace MyServer.ViewModels
             SelectedDomain = selectedDomain;
             Name = SelectedDomain.Name;
             DocumentRoot = SelectedDomain.DocumentRoot;
+            SelectedProfile = SelectedDomain.Profile;
         }
     }
 }
