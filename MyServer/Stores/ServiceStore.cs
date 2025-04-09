@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Windows;
 
 namespace MyServer.Stores
 {
@@ -19,7 +18,7 @@ namespace MyServer.Stores
 
         public ServiceStore()
         {
-            _dbContext = new Db();
+            _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
 
             var services = _dbContext.Services.ToList();

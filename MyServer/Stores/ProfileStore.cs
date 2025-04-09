@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 
 namespace MyServer.Stores
 {
@@ -18,7 +17,7 @@ namespace MyServer.Stores
 
         public ProfileStore()
         {
-            _dbContext = new Db();
+            _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
             _profiles = new ObservableCollection<Profile>(_dbContext.Profiles.ToList());
         }

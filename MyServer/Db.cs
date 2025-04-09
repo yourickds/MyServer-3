@@ -5,6 +5,8 @@ namespace MyServer
 {
     class Db: DbContext
     {
+        private static Db? _instance;
+        public static Db Instance => _instance ??= new Db();
         public DbSet<Service> Services { get; set; }
         public DbSet<Favourite> Favourites { get; set; }
         public DbSet<Module> Modules { get; set; }

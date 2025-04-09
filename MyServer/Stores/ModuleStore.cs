@@ -18,7 +18,7 @@ namespace MyServer.Stores
 
         public ModuleStore()
         {
-            _dbContext = new Db();
+            _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
 
             var modules = _dbContext.Modules.ToList();

@@ -18,7 +18,7 @@ namespace MyServer.Stores
 
         public FavouriteStore()
         {
-            _dbContext = new Db();
+            _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
 
             var favourites = _dbContext.Favourites.ToList();
