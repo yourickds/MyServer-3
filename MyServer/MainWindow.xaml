@@ -14,6 +14,9 @@
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="0" Margin="5">
+            <TabItem Header="Domains">
+                <userControls:DomainUserControl/>
+            </TabItem>
             <TabItem Header="Profiles">
                 <userControls:ProfileUserControl/>
             </TabItem>

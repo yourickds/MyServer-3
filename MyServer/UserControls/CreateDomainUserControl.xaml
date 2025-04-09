@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MyServer.UserControls.CreateDomainUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyServer.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <StackPanel Grid.Row="0" VerticalAlignment="Top" Margin="5">
+            <Label Content="Name" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+
+            <Label Content="DocumentRoot" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding DocumentRoot}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+
+            <Label Content="Profile" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <ComboBox Grid.Column="0" Margin="0,0,0,5"/>
+
+            <Button Content="Create" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="CreateDomain"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -11,6 +11,7 @@ namespace MyServer
         public DbSet<Favourite> Favourites { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Domain> Domains { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
