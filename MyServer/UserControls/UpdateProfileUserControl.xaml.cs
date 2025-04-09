@@ -45,5 +45,36 @@ namespace MyServer.UserControls
             ProfileStore.Instance.UpdateProfile(SelectedProfile);
             MessageBox.Show("Update Profile");
         }
+
+        private void AppendModule(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (_viewModel.SelectedModule is not null and Module)
+            {
+                if (!_viewModel.AppendModules.Any(m => m.Id == _viewModel.SelectedModule.Id))
+                {
+                    _viewModel.AppendModules.Add(_viewModel.SelectedModule);
+                }
+                else
+                {
+                    MessageBox.Show("Module already exists!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selected Module");
+            }
+        }
+
+        private void DeleteModule(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.SelectedAppendModule is not null and Module)
+            {
+                _viewModel.AppendModules.Remove(_viewModel.SelectedAppendModule);
+            }
+            else
+            {
+                MessageBox.Show("Selected Module for Delete");
+            }
+        }
     }
 }

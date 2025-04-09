@@ -7,13 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
-        <StackPanel VerticalAlignment="Top" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" VerticalAlignment="Top" Margin="5">
             <Label Content="Name" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
             <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
 
             <Label Content="Modules" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
-            <ComboBox Margin="0,0,0,5" ItemsSource="{Binding Modules}" DisplayMemberPath="Name"/>
-            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="0" Margin="0,0,0,5" ItemsSource="{Binding Modules}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedModule}"/>
+                <Button Grid.Column="2" Content="Append" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="AppendModule"/>
+            </Grid>
+        </StackPanel>
+
+        <ListBox Grid.Row="1" Margin="5" ItemsSource="{Binding AppendModules}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedAppendModule}"/>
+
+        <StackPanel Grid.Row="2" VerticalAlignment="Top" Margin="5">
+            <Button Content="Delete Module" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="DeleteModule"/>
             <Button Content="Create" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="CreateProfile"/>
         </StackPanel>
     </Grid>

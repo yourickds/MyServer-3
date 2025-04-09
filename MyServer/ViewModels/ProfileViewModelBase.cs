@@ -12,6 +12,12 @@ namespace MyServer.ViewModels
 
         public ObservableCollection<Module> Modules => ModuleStore.Instance.Modules;
 
+        private Module? _selectedModule;
+
+        private ObservableCollection<Module> _appendModules = [];
+
+        private Module? _selectedAppendModule;
+
         public string? Name
         {
             get => _name;
@@ -27,6 +33,24 @@ namespace MyServer.ViewModels
                     OnPropertyChanged(nameof(Modules));
                 }
             };
+        }
+
+        public Module? SelectedModule
+        {
+            get => _selectedModule;
+            set { _selectedModule = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<Module> AppendModules
+        {
+            get => _appendModules;
+            set { _appendModules = value; OnPropertyChanged(); }
+        }
+
+        public Module? SelectedAppendModule
+        {
+            get => _selectedAppendModule;
+            set { _selectedAppendModule = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
