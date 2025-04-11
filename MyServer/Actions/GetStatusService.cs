@@ -11,7 +11,7 @@ namespace MyServer.Actions
             //if (!service.Status) return false;
 
             if (service.Pid != null && 
-                GetProcessService.Invoke(service.Pid.Value, service.FilePath) is not null and Process)
+                GetProcessService.Invoke(service.Pid.Value, service.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory)) is not null and Process)
             {
                     return true;
             }
