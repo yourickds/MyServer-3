@@ -20,14 +20,7 @@ namespace MyServer.Stores
         {
             _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
-
-            var services = _dbContext.Services.ToList();
-            foreach (var service in services)
-            {
-                service.FilePath = service.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-                service.Arguments = service.Arguments?.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-            }
-            _services = new ObservableCollection<Service>(services);
+            _services = new ObservableCollection<Service>(_dbContext.Services.ToList());
 
         }
 
@@ -78,13 +71,7 @@ namespace MyServer.Stores
 
         private void RefreshServices()
         {
-            var services = _dbContext.Services.ToList();
-            foreach (var service in services)
-            {
-                service.FilePath = service.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-                service.Arguments = service.Arguments?.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-            }
-            Services = new ObservableCollection<Service>(services);
+            Services = new ObservableCollection<Service>(_dbContext.Services.ToList());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -10,8 +10,8 @@ namespace MyServer.ViewModels
         {
             SelectedService = selectedService;
             Name = SelectedService.Name;
-            FilePath = SelectedService.FilePath;
-            Arguments = SelectedService.Arguments;
+            FilePath = SelectedService.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
+            Arguments = SelectedService.Arguments?.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
             Startup = SelectedService.Startup;
         }
     }
