@@ -46,6 +46,7 @@ namespace MyServer.ViewModels
                 View = _selectedService != null
                     ? new UpdateServiceUserControl(_selectedService)
                     : new CreateServiceUserControl();
+                OnPropertyChanged();
             }
         }
 
