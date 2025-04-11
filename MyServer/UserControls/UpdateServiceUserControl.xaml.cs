@@ -5,6 +5,7 @@ using System.Windows;
 using MyServer.Stores;
 using System.IO;
 using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace MyServer.UserControls
 {
@@ -74,6 +75,103 @@ namespace MyServer.UserControls
                 // Если файл был выбран, обновляем текст в TextBox
                 _viewModel.FilePath = openFileDialog.FileName;
             }
+        }
+
+        private void ToggleService(object sender, RoutedEventArgs e)
+        {
+            if (SelectedService is not null and Service)
+            {
+                if (SelectedService.Status && SelectedService.Pid is not null)
+                {
+                    if (StopService(SelectedService.Pid.Value))
+                    {
+                        SelectedService.Pid = null;
+                        SelectedService.Status = false;
+                        ServiceStore.Instance.UpdateService(SelectedService);
+                    }
+                }
+                else
+                {
+                    int? pid = StartService();
+                    if (pid is not null)
+                    {
+                        SelectedService.Pid = pid;
+                        SelectedService.Status = true;
+                        ServiceStore.Instance.UpdateService(SelectedService);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selected Service");
+            }
+        }
+
+        private int? StartService()
+        {
+            Process process = new();
+            process.StartInfo.FileName = SelectedService.FilePath.Replace("%myserverdir%", AppDomain.CurrentDomain.BaseDirectory);
+            process.StartInfo.UseShellExecute = true;
+            if (!String.IsNullOrEmpty(SelectedService.Arguments))
+            {
+                process.StartInfo.Arguments = SelectedService.Arguments.Replace("%myserverdir%", AppDomain.CurrentDomain.BaseDirectory);
+            }
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (process.Start())
+            {
+                MessageBox.Show("Service Started. Pid: " + process.Id);
+                return process.Id;
+            }
+            MessageBox.Show("Не удалось запустить процесс");
+            return null;
+        }
+
+        private bool StopService(int pid)
+        {
+            try
+            {
+                Process process = Process.GetProcessById(pid);
+
+                // Проверяем, не завершился ли процесс
+                if (process.HasExited)
+                {
+                    MessageBox.Show($"Процесс уже завершён.");
+                    return true;
+                }
+
+                try
+                {
+                    if (process.MainModule != null && process.MainModule.FileName == SelectedService.FilePath)
+                    {
+                        process.Kill(true);
+                    }
+                    MessageBox.Show("Service is Stopped");
+                    return true;
+                }
+                catch (System.ComponentModel.Win32Exception)
+                {
+                    MessageBox.Show($"Не удалось получить директорию процесса");
+                }
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show($"Процесс не существует.");
+                return true;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                MessageBox.Show($"Нет доступа к процессу. Требуются права администратора?");
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show($"Процесс завершился или недоступен.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
+            }
+
+            return false;
         }
     }
 }

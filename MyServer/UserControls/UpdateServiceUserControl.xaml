@@ -36,7 +36,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
-                <Button Grid.Column="0" Content="Start/Stop" Margin="0,0,0,0" VerticalAlignment="Top" Height="22"/>
+                <Button Grid.Column="0" Content="Start/Stop" Margin="0,0,0,0" VerticalAlignment="Top" Height="22" Click="ToggleService"/>
                 <Button Grid.Column="2" Content="Restart" Margin="0,0,0,0" VerticalAlignment="Top" Height="22"/>
             </Grid>
         </StackPanel>
