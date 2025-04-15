@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
+using MyServer.Actions;
 using MyServer.Models;
 
 namespace MyServer.Stores
@@ -36,6 +37,9 @@ namespace MyServer.Stores
         {
             _dbContext.Domains.Add(domain);
             _dbContext.SaveChanges();
+
+            CreateTemplateConfigDomain.Invoke(domain);
+
             RefreshDomains();
         }
 
