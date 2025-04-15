@@ -46,6 +46,7 @@ namespace MyServer.ViewModels
                 View = _selectedModule != null
                     ? new UpdateModuleUserControl(_selectedModule)
                     : new CreateModuleUserControl();
+                OnPropertyChanged();
             }
         }
 
