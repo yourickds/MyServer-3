@@ -47,6 +47,7 @@ namespace MyServer.ViewModels
                 View = _selectedProfile != null
                     ? new UpdateProfileUserControl(_selectedProfile)
                     : new CreateProfileUserControl();
+                OnPropertyChanged();
             }
         }
 
