@@ -47,6 +47,7 @@ namespace MyServer.ViewModels
                 View = _selectedDomain != null
                     ? new UpdateDomainUserControl(_selectedDomain)
                     : new CreateDomainUserControl();
+                OnPropertyChanged();
             }
         }
 
