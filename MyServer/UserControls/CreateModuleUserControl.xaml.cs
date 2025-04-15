@@ -45,7 +45,8 @@ namespace MyServer.UserControls
             Module newModule = new()
             {
                 Name = _viewModel.Name,
-                Dir = _viewModel.Dir
+                Dir = _viewModel.Dir,
+                Variable = _viewModel.Variable
             };
 
             // Проверяем перед добавлением

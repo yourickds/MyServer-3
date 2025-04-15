@@ -8,6 +8,7 @@ namespace MyServer.ViewModels
     {
         private string? _name;
         private string? _dir;
+        private string? _variable;
 
         public string? Name
         {
@@ -19,6 +20,12 @@ namespace MyServer.ViewModels
         {
             get => _dir;
             set { _dir = value; OnPropertyChanged(); }
+        }
+
+        public string? Variable
+        {
+            get => _variable;
+            set { _variable = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -22,6 +22,9 @@
                 <Button Grid.Column="1" Content="Change" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="OpenDialogDirectoryPath"/>
             </Grid>
 
+            <Label Content="Variable" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
+            <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Variable}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
+
             <Button Content="Create" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="CreateModule"/>
         </StackPanel>
     </Grid>

@@ -11,6 +11,7 @@ namespace MyServer.ViewModels
             SelectedModule = selectedModule;
             Name = SelectedModule.Name;
             Dir = SelectedModule.Dir;
+            Variable = SelectedModule.Variable;
         }
     }
 }

@@ -56,6 +56,7 @@ namespace MyServer.UserControls
 
             SelectedModule.Name = _viewModel.Name;
             SelectedModule.Dir = _viewModel.Dir;
+            SelectedModule.Variable = _viewModel.Variable;
 
             ModuleStore.Instance.UpdateModule(SelectedModule);
             MessageBox.Show("Update Module");
