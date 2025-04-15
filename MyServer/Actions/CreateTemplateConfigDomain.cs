@@ -22,7 +22,7 @@ namespace MyServer.Actions
                 {
                     if (module != null && module.Variable != null && module.Dir != null)
                     {
-                        content = content.Replace(module.Variable, module.Dir);
+                        content = content.Replace(module.Variable, module.Dir.Replace("\\", "/"));
                     }
                 }
                 StreamWriter writer = new("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
