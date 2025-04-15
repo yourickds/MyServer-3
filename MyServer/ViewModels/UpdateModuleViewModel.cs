@@ -10,7 +10,7 @@ namespace MyServer.ViewModels
         {
             SelectedModule = selectedModule;
             Name = SelectedModule.Name;
-            Dir = SelectedModule.Dir;
+            Dir = SelectedModule.Dir.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
             Variable = SelectedModule.Variable;
         }
     }

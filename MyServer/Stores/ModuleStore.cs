@@ -20,14 +20,7 @@ namespace MyServer.Stores
         {
             _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
-
-            var modules = _dbContext.Modules.ToList();
-            foreach (var module in modules)
-            {
-                module.Dir = module.Dir.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-            }
-
-            _modules = new ObservableCollection<Module>(modules);
+            _modules = new ObservableCollection<Module>(_dbContext.Modules.ToList());
         }
 
         public ObservableCollection<Module> Modules
@@ -69,12 +62,7 @@ namespace MyServer.Stores
 
         private void RefreshModules()
         {
-            var modules = _dbContext.Modules.ToList();
-            foreach (var module in modules)
-            {
-                module.Dir = module.Dir.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-            }
-            Modules = new ObservableCollection<Module>(modules);
+            Modules = new ObservableCollection<Module>(_dbContext.Modules.ToList());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
