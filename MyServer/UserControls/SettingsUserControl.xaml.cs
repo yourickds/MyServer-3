@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using MyServer.Actions;
 
@@ -17,6 +18,17 @@ namespace MyServer.UserControls
         private void GenerateConfigSerives(object sender, RoutedEventArgs e)
         {
             GenerateConfigServices.Invoke();
+        }
+
+        private void OpenHostsFile(object sender, RoutedEventArgs e)
+        {
+            var notepad = new Process();
+            notepad.StartInfo.FileName = "notepad.exe";
+            notepad.StartInfo.Arguments = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "/System32/drivers/etc/hosts";
+            notepad.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+            notepad.StartInfo.Verb = "runas";
+            notepad.StartInfo.UseShellExecute = true;
+            notepad.Start();
         }
     }
 }
