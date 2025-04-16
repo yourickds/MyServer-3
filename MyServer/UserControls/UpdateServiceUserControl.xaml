@@ -7,7 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
-        <StackPanel VerticalAlignment="Top" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" VerticalAlignment="Top" Margin="5">
             <Label Content="Name" Margin="0,0,0,5" Padding="0" VerticalAlignment="Top"/>
             <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
 
@@ -35,10 +40,28 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Button Grid.Column="0" Content="Start/Stop" Margin="0,0,0,0" VerticalAlignment="Top" Height="22" Click="ToggleService"/>
                 <Button Grid.Column="2" Content="Restart" Margin="0,0,0,0" VerticalAlignment="Top" Height="22"/>
             </Grid>
         </StackPanel>
+
+        <StatusBar Grid.Row="1">
+            <StatusBar.Items>
+                <StatusBarItem HorizontalAlignment="Left">
+                    <TextBlock>
+                        <Run Text="Status:"/>
+                        <Run Text="{Binding Status}"/>
+                    </TextBlock>
+                </StatusBarItem>
+                <StatusBarItem HorizontalAlignment="Right">
+                    <TextBlock>
+                        <Run Text="PID:"/>
+                        <Run Text="{Binding Pid}"/>
+                    </TextBlock>
+                </StatusBarItem>
+            </StatusBar.Items>
+        </StatusBar>
+
     </Grid>
 </UserControl>
