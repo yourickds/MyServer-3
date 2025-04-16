@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyServer.Actions;
 using MyServer.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -37,6 +38,9 @@ namespace MyServer.Stores
         {
             _dbContext.Profiles.Add(profile);
             _dbContext.SaveChanges();
+
+            GenerateProfileBat.Invoke(profile);
+
             RefreshProfiles();
         }
 
