@@ -12,7 +12,6 @@ namespace MyServer.Actions
             {
                 Process? process = GetProcessService.Invoke(service.Pid.Value, service.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory));
                 process?.Kill(true);
-                service.Status = false;
                 service.Pid = null;
                 ServiceStore.Instance.UpdateService(service);
             }

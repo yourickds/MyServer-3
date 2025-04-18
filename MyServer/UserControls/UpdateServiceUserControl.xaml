@@ -51,13 +51,13 @@
                 <StatusBarItem HorizontalAlignment="Left">
                     <TextBlock>
                         <Run Text="Status:"/>
-                        <Run Text="{Binding Status}"/>
+                        <Run Text="{Binding SelectedService.Status, Mode=OneWay}"/>
                     </TextBlock>
                 </StatusBarItem>
                 <StatusBarItem HorizontalAlignment="Right">
                     <TextBlock>
                         <Run Text="PID:"/>
-                        <Run Text="{Binding Pid}"/>
+                        <Run Text="{Binding SelectedService.Pid}"/>
                     </TextBlock>
                 </StatusBarItem>
             </StatusBar.Items>

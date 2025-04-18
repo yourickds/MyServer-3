@@ -5,7 +5,6 @@ using System.Windows;
 using MyServer.Stores;
 using System.IO;
 using Microsoft.Win32;
-using System.Diagnostics;
 using MyServer.Actions;
 
 namespace MyServer.UserControls
@@ -81,15 +80,9 @@ namespace MyServer.UserControls
         private void ToggleService(object sender, RoutedEventArgs e)
         {
             if (GetStatusService.Invoke(SelectedService))
-            {
                 GetStopService.Invoke(SelectedService);
-                _viewModel.Pid = SelectedService.Pid;
-            }
             else
-            {
                 GetStartService.Invoke(SelectedService);
-                _viewModel.Pid = SelectedService.Pid;
-            }
         }
     }
 }

@@ -18,11 +18,14 @@ namespace MyServer.Actions
                 process.StartInfo.Arguments = service.Arguments.Replace("%myserverdir%", AppDomain.CurrentDomain.BaseDirectory);
             }
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.EnableRaisingEvents = true;
             if (process.Start())
             {
-                service.Status = true;
                 service.Pid = process.Id;
                 ServiceStore.Instance.UpdateService(service);
+
+                SetObservableService.Invoke(process, service);
+
                 MessageBox.Show("Service Started. Pid: " + process.Id);
             }
             else
