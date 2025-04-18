@@ -77,12 +77,26 @@ namespace MyServer.UserControls
             }
         }
 
-        private void ToggleService(object sender, RoutedEventArgs e)
+        //private void ToggleService(object sender, RoutedEventArgs e)
+        //{
+        //    if (GetStatusService.Invoke(SelectedService))
+        //        GetStopService.Invoke(SelectedService);
+        //    else
+        //        GetStartService.Invoke(SelectedService);
+        //}
+
+        private void StartService(object sender, RoutedEventArgs e)
+        {
+            if (GetStatusService.Invoke(SelectedService))
+                MessageBox.Show("Служба уже запущена!");
+            else
+                GetStartService.Invoke(SelectedService);
+        }
+
+        private void StopService(object sender, RoutedEventArgs e)
         {
             if (GetStatusService.Invoke(SelectedService))
                 GetStopService.Invoke(SelectedService);
-            else
-                GetStartService.Invoke(SelectedService);
         }
     }
 }

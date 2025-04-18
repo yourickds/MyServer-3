@@ -41,8 +41,8 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Content="Start/Stop" Margin="0,0,0,0" VerticalAlignment="Top" Height="22" Click="ToggleService"/>
-                <Button Grid.Column="2" Content="Restart" Margin="0,0,0,0" VerticalAlignment="Top" Height="22"/>
+                <Button Grid.Column="0" Content="Start" Margin="0,0,0,0" VerticalAlignment="Top" Height="22" Click="StartService"/>
+                <Button Grid.Column="2" Content="Stop" Margin="0,0,0,0" VerticalAlignment="Top" Height="22" Click="StopService"/>
             </Grid>
         </StackPanel>
 

@@ -8,7 +8,7 @@ namespace MyServer.Actions
 {
     public static class GetStartService
     {
-        public static void Invoke(Service service)
+        public static async void Invoke(Service service)
         {
             Process process = new();
             process.StartInfo.FileName = service.FilePath.Replace("%myserverdir%", AppDomain.CurrentDomain.BaseDirectory);
@@ -21,12 +21,22 @@ namespace MyServer.Actions
             process.EnableRaisingEvents = true;
             if (process.Start())
             {
-                service.Pid = process.Id;
-                ServiceStore.Instance.UpdateService(service);
+                await Task.Delay(100); // Даём время на инициализацию
+                process.Refresh();     // Обновляем данные процесса
 
-                SetObservableService.Invoke(process, service);
+                if (!process.HasExited)
+                {
+                    service.Pid = process.Id;
+                    ServiceStore.Instance.UpdateService(service);
 
-                MessageBox.Show("Service Started. Pid: " + process.Id);
+                    SetObservableService.Invoke(process, service);
+
+                    MessageBox.Show("Service Started. Pid: " + process.Id);
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось запустить процесс");
+                }
             }
             else
             {
