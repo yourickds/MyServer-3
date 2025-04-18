@@ -13,7 +13,7 @@ namespace MyServer.ViewModels
         public int? Pid
         {
             get { return _pid; }
-            set { _pid = value; OnPropertyChanged(); }
+            set { _pid = value; Status = GetStatusService.Invoke(SelectedService);  OnPropertyChanged(); }
         }
 
         public bool Status

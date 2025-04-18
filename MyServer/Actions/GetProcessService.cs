@@ -23,25 +23,25 @@ namespace MyServer.Actions
                     }
                     catch (System.ComponentModel.Win32Exception)
                     {
-                        MessageBox.Show($"Не удалось получить директорию процесса");
+                        //MessageBox.Show($"Не удалось получить директорию процесса");
                     }
                 }
             }
             catch (ArgumentException)
             {
-                MessageBox.Show($"Процесс не существует.");
+                //MessageBox.Show($"Процесс не существует.");
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                MessageBox.Show($"Нет доступа к процессу. Требуются права администратора?");
+                //MessageBox.Show($"Нет доступа к процессу. Требуются права администратора?");
             }
             catch (InvalidOperationException)
             {
-                MessageBox.Show($"Процесс завершился или недоступен.");
+                //MessageBox.Show($"Процесс завершился или недоступен.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
+                //MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
             }
 
             return null;

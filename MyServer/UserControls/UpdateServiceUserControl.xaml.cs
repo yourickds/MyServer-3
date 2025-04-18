@@ -81,9 +81,15 @@ namespace MyServer.UserControls
         private void ToggleService(object sender, RoutedEventArgs e)
         {
             if (GetStatusService.Invoke(SelectedService))
+            {
                 GetStopService.Invoke(SelectedService);
+                _viewModel.Pid = SelectedService.Pid;
+            }
             else
+            {
                 GetStartService.Invoke(SelectedService);
+                _viewModel.Pid = SelectedService.Pid;
+            }
         }
     }
 }
