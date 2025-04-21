@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using MyServer.Actions;
 using MyServer.Models;
 using MyServer.Stores;
@@ -38,6 +37,16 @@ namespace MyServer
                     GetStartService.Invoke(service);
                 }
             }
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // Останавливаем все запущенные службы
+            foreach (Service service in ServiceStore.Instance.Services)
+            {
+                GetStopService.Invoke(service);
+            }
+            base.OnExit(e);
         }
     }
 
