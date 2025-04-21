@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -21,6 +22,17 @@ namespace MyServer
                 UseShellExecute = true
             });
             e.Handled = true;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // Отменяем стандартное закрытие окна
+            e.Cancel = true;
+
+            // Скрываем окно вместо закрытия
+            this.Hide();
+
+            base.OnClosing(e);
         }
     }
 }

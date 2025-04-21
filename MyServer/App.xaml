@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:MyServer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/TrayMenuResources.xaml"/>
+                <!-- Другие словари ресурсов -->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
