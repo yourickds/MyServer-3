@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
+using MyServer.Actions;
 
 namespace MyServer
 {
@@ -13,6 +14,7 @@ namespace MyServer
         public MainWindow()
         {
             InitializeComponent();
+            TrayMenuContext.ContextMenu = SetTrayMenu.Invoke();
         }
 
         private void OpenLinkAuthor(object sender, RequestNavigateEventArgs e)

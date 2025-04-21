@@ -54,7 +54,6 @@
             Visibility="Visible"
             ToolTipText="MyServer"
             IconSource="/Resources/App.ico"
-            ContextMenu="{StaticResource TrayMenu}"
             MenuActivation="RightClick"
         />
     </Grid>

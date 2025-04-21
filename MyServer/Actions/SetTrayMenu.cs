@@ -1,13 +1,31 @@
 ﻿using System.Windows;
-using MyServer.Actions;
+using System.Windows.Controls;
 using MyServer.Models;
 using MyServer.Stores;
 
-namespace MyServer.Resources
+namespace MyServer.Actions
 {
-    public partial class TrayMenuResources: ResourceDictionary
+    public static class SetTrayMenu
     {
-        private void ShowMainWindow(object sender, RoutedEventArgs e)
+        public static ContextMenu Invoke()
+        {
+            ContextMenu menu = new();
+            menu.Items.Clear();
+
+            MenuItem setting = new() { Header = "Settings" };
+            setting.Click += ShowMainWindow;
+
+            menu.Items.Add(setting);
+
+            MenuItem exit = new() { Header = "Exit" };
+            exit.Click += AppExit;
+
+            menu.Items.Add(exit);
+
+            return menu;
+        }
+
+        private static void ShowMainWindow(object sender, RoutedEventArgs e)
         {
             if (Application.Current.MainWindow == null) return;
 
@@ -31,7 +49,7 @@ namespace MyServer.Resources
             Application.Current.MainWindow.Topmost = false;
         }
 
-        private void AppExit(object sender, RoutedEventArgs e)
+        private static void AppExit(object sender, RoutedEventArgs e)
         {
             // 1. Закрываем все окна приложения
             foreach (Window window in Application.Current.Windows)
