@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
-using MyServer.Actions;
+using MyServer.ViewModels;
 
 namespace MyServer
 {
@@ -11,10 +11,13 @@ namespace MyServer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainWindowViewModel _viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
-            TrayMenuContext.ContextMenu = SetTrayMenu.Invoke();
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
         }
 
         private void OpenLinkAuthor(object sender, RequestNavigateEventArgs e)

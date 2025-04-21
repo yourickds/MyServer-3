@@ -53,6 +53,7 @@
         <tb:TaskbarIcon x:Name="TrayMenuContext"
             Visibility="Visible"
             ToolTipText="MyServer"
+            ContextMenu="{Binding CtxMenu}"
             IconSource="/Resources/App.ico"
             MenuActivation="RightClick"
         />
