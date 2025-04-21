@@ -14,6 +14,11 @@ namespace MyServer
         {
             base.OnStartup(e);
 
+            //Оичщаем на всякий файл Hosts
+            ClearDomainHosts.Invoke();
+            // Заполняем файл hosts
+            SetDomainHosts.Invoke();
+
             //Получаем все службы и проверяем какие уже запущены и цепляем слушателя, а какие надо запустить
             foreach (Service service in ServiceStore.Instance.Services)
             {
@@ -46,6 +51,8 @@ namespace MyServer
             {
                 GetStopService.Invoke(service);
             }
+            // Очищаем файл Hosts
+            ClearDomainHosts.Invoke();
             base.OnExit(e);
         }
     }
