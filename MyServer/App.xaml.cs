@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using MyServer.Actions;
 using MyServer.Models;
 using MyServer.Stores;
@@ -14,10 +15,25 @@ namespace MyServer
         {
             base.OnStartup(e);
 
-            //Получаем все службы и проверяем какие надо запустить
-            foreach (Service service in ServiceStore.Instance.Services.Where(s => s.Startup))
+            //Получаем все службы и проверяем какие уже запущены и цепляем слушателя, а какие надо запустить
+            foreach (Service service in ServiceStore.Instance.Services)
             {
-                if (!GetStatusService.Invoke(service))
+                // Проверяем указан ли Pid и запущена ли данная служба
+                if (service.Pid != null && GetStatusService.Invoke(service))
+                {
+                    //Process? process = GetProcessService.Invoke(service.Pid.Value, service.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory));
+                    //// Если процесс существует то вешаем на него слушателя
+                    //if (process != null && !process.HasExited) 
+                    //{
+                    //    MessageBox.Show("What at Fuck");
+                    //    SetObservableService.Invoke(process, service);
+                    //}
+                    // Не получается повесить на уже существующий процесс слушателя (
+                    GetStopService.Invoke(service);
+                    GetStartService.Invoke(service);
+                }
+                // Если не запущена служба, запускаем службу если есть галочка
+                else if (service.Startup)
                 {
                     GetStartService.Invoke(service);
                 }

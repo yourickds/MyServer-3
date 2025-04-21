@@ -31,7 +31,7 @@ namespace MyServer.Actions
 
                     SetObservableService.Invoke(process, service);
 
-                    MessageBox.Show("Service Started. Pid: " + process.Id);
+                    //MessageBox.Show("Service Started. Pid: " + process.Id);
                 }
                 else
                 {

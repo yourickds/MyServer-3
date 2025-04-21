@@ -24,7 +24,7 @@ namespace MyServer.Actions
                         {
                             service.Pid = null;
                             ServiceStore.Instance.UpdateService(service);
-                            MessageBox.Show($"Служба {service.Name} была остановлена!");
+                            //MessageBox.Show($"Служба {service.Name} была остановлена!");
                         });
                     }
                 };
