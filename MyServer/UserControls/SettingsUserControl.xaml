@@ -12,6 +12,7 @@
             <Button Content="Open file HOSTS in notepad" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22" Click="OpenHostsFile"/>
             <Button Content="Create config files" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22"/>
             <Button Content="Generate config file for servicecs" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22" Click="GenerateConfigSerives"/>
+            <Button Content="Restart all work services" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22" Click="RestartWorkServices"/>
             <Button Content="Save" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22"/>
         </StackPanel>
     </Grid>

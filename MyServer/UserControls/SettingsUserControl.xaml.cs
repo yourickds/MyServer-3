@@ -1,7 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using MyServer.Actions;
+using MyServer.Models;
+using MyServer.Stores;
 
 namespace MyServer.UserControls
 {
@@ -29,6 +32,20 @@ namespace MyServer.UserControls
             notepad.StartInfo.Verb = "runas";
             notepad.StartInfo.UseShellExecute = true;
             notepad.Start();
+        }
+
+        private async void RestartWorkServices(object sender, RoutedEventArgs e)
+        {
+            // Получаем все службы
+            foreach (Service service in ServiceStore.Instance.Services)
+            {
+                if (service.Pid != null && GetStatusService.Invoke(service))
+                {
+                    GetStopService.Invoke(service);
+                    await Task.Delay(300); // Даём время на завершение процесса
+                    GetStartService.Invoke(service);
+                }
+            }
         }
     }
 }
