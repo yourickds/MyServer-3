@@ -26,9 +26,24 @@ namespace MyServer.UserControls
 
         private void DeleteDomain(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (_viewModel.SelectedDomain != null && _viewModel.SelectedDomain is Domain)
+            if (_viewModel.SelectedDomain != null && _viewModel.SelectedDomain is Domain domain)
             {
-                DomainStore.Instance.DeleteDomain(_viewModel.SelectedDomain.Id);
+                // Подтверждаем удаление
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить домен ?", "Удаление домена.", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Проверяем существует ли директория
+                    if (System.IO.Directory.Exists("domains/" + domain.Name))
+                    {
+                        // Спрашиваем удалить ли ее
+                        MessageBoxResult resultDir = MessageBox.Show("Вы хотите удалить директория сайта ?", "Удаление сайта.", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (resultDir == MessageBoxResult.Yes)
+                        {
+                            System.IO.Directory.Delete("domains/" + domain.Name, recursive: true);
+                        }
+                    }
+                    DomainStore.Instance.DeleteDomain(_viewModel.SelectedDomain.Id);
+                }
             }
             else
             {

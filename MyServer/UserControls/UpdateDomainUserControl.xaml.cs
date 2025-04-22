@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using MyServer.Models;
 using MyServer.Stores;
@@ -73,6 +74,30 @@ namespace MyServer.UserControls
             {
                 MessageBox.Show("Name already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return; // Прерываем выполнение
+            }
+
+            // Проверяем существует ли директория
+            if (System.IO.Directory.Exists("domains/" + SelectedDomain.Name))
+            {
+                // Переименовываем директорию
+                try
+                {
+                    // Проверяем, не существует ли уже директория с новым именем
+                    if (!Directory.Exists("domains/" + _viewModel.Name))
+                    {
+                        Directory.Move("domains/" + SelectedDomain.Name, "domains/" + _viewModel.Name);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Директория с таким именем уже существует");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при переименовании директории: {ex.Message}");
+                    return;
+                }
             }
 
             SelectedDomain.Name = _viewModel.Name;

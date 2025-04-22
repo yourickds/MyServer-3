@@ -38,7 +38,15 @@ namespace MyServer.Stores
             _dbContext.Domains.Add(domain);
             _dbContext.SaveChanges();
 
+            // Создаем .conf.tpl
             CreateTemplateConfigDomain.Invoke(domain);
+            // Генерируем конфиг для домена
+            GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
+            // Пересоздаем файл Hosts
+            ClearDomainHosts.Invoke();
+            SetDomainHosts.Invoke();
+            // Перезапускаем службы
+            RestartWorkServices.Invoke();
 
             RefreshDomains();
         }
@@ -47,6 +55,19 @@ namespace MyServer.Stores
         {
             _dbContext.Domains.Update(domain);
             _dbContext.SaveChanges();
+
+            // Удаляем конфиги .conf.tpl и .conf
+            DeleteConfigsDomain.Invoke(domain);
+            // Создаем .conf.tpl
+            CreateTemplateConfigDomain.Invoke(domain);
+            // Генерируем конфиг для домена
+            GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
+            // Пересоздаем файл Hosts
+            ClearDomainHosts.Invoke();
+            SetDomainHosts.Invoke();
+            // Перезапускаем службы
+            RestartWorkServices.Invoke();
+
             RefreshDomains();
         }
 
@@ -55,8 +76,18 @@ namespace MyServer.Stores
             var domain = _dbContext.Domains.Find(id);
             if (domain != null)
             {
+                // Удаляем конфиги .conf.tpl и .conf
+                DeleteConfigsDomain.Invoke(domain);
+             
                 _dbContext.Domains.Remove(domain);
                 _dbContext.SaveChanges();
+
+                // Пересоздаем файл Hosts
+                ClearDomainHosts.Invoke();
+                SetDomainHosts.Invoke();
+                // Перезапускаем службы
+                RestartWorkServices.Invoke();
+
                 RefreshDomains();
             }
         }
