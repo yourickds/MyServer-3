@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using MyServer.Stores;
 using MyServer.ViewModels;
 using MyServer.Models;
+using MyServer.Actions;
 
 namespace MyServer.UserControls
 {
@@ -29,7 +30,18 @@ namespace MyServer.UserControls
         {
             if (_viewModel.SelectedService != null && _viewModel.SelectedService is Service)
             {
-                ServiceStore.Instance.DeleteService(_viewModel.SelectedService.Id);
+                //Подтверждение на удаление
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить службу ?", "Удаление службы", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Проверяем состояние службы
+                    if (GetStatusService.Invoke(_viewModel.SelectedService))
+                    {
+                        // Останавливаем службу
+                        GetStopService.Invoke(_viewModel.SelectedService);
+                    }
+                    ServiceStore.Instance.DeleteService(_viewModel.SelectedService.Id);
+                }
             }
             else
             {
