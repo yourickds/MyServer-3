@@ -42,11 +42,6 @@ namespace MyServer.Stores
             CreateTemplateConfigDomain.Invoke(domain);
             // Генерируем конфиг для домена
             GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
-            // Пересоздаем файл Hosts
-            ClearDomainHosts.Invoke();
-            SetDomainHosts.Invoke();
-            // Перезапускаем службы
-            RestartWorkServices.Invoke();
 
             RefreshDomains();
         }
@@ -62,11 +57,6 @@ namespace MyServer.Stores
             CreateTemplateConfigDomain.Invoke(domain);
             // Генерируем конфиг для домена
             GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
-            // Пересоздаем файл Hosts
-            ClearDomainHosts.Invoke();
-            SetDomainHosts.Invoke();
-            // Перезапускаем службы
-            RestartWorkServices.Invoke();
 
             RefreshDomains();
         }
@@ -82,12 +72,6 @@ namespace MyServer.Stores
                 _dbContext.Domains.Remove(domain);
                 _dbContext.SaveChanges();
 
-                // Пересоздаем файл Hosts
-                ClearDomainHosts.Invoke();
-                SetDomainHosts.Invoke();
-                // Перезапускаем службы
-                RestartWorkServices.Invoke();
-
                 RefreshDomains();
             }
         }
@@ -95,6 +79,11 @@ namespace MyServer.Stores
         private void RefreshDomains()
         {
             Domains = new ObservableCollection<Domain>(_dbContext.Domains.Include(d => d.Profile).ToList());
+            // Пересоздаем файл Hosts
+            ClearDomainHosts.Invoke();
+            SetDomainHosts.Invoke();
+            // Перезапускаем службы
+            RestartWorkServices.Invoke();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

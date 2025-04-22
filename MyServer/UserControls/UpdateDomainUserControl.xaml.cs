@@ -77,7 +77,7 @@ namespace MyServer.UserControls
             }
 
             // Проверяем существует ли директория
-            if (System.IO.Directory.Exists("domains/" + SelectedDomain.Name))
+            if (SelectedDomain.Name != _viewModel.Name && System.IO.Directory.Exists("domains/" + SelectedDomain.Name))
             {
                 // Переименовываем директорию
                 try
