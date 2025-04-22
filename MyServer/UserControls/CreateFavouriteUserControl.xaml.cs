@@ -36,11 +36,12 @@ namespace MyServer.UserControls
                 return;
             }
 
-            if (!File.Exists(_viewModel.FilePath))
-            {
-                MessageBox.Show("File Not Found in `FilePath`");
-                return;
-            }
+            // Реалиизовать проверку на наличие файла или корректность url адреса http:// or https://
+            //if (!File.Exists(_viewModel.FilePath) && !Uri.CheckSchemeName(_viewModel.FilePath))
+            //{
+            //    MessageBox.Show("File or Url Not Found in `FilePath`");
+            //    return;
+            //}
 
             Favourite newFavourite = new()
             {

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
@@ -39,11 +40,11 @@ namespace MyServer.UserControls
                 return;
             }
 
-            if (!File.Exists(_viewModel.FilePath))
+            /*if (!File.Exists(_viewModel.FilePath))
             {
                 MessageBox.Show("File Not Found in `FilePath`");
                 return;
-            }
+            }*/
 
             bool nameExists = FavouriteStore.Instance.Favourites
                 .Any(s => s.Name == _viewModel.Name && s.Id != SelectedFavourite.Id);

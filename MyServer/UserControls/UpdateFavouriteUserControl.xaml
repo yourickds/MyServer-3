@@ -26,10 +26,8 @@
             <TextBox Margin="0,0,0,5" TextWrapping="Wrap" Text="{Binding Arguments}" VerticalAlignment="Top" Height="22" VerticalContentAlignment="Center"/>
 
             <CheckBox Content="Startup in Browser" HorizontalAlignment="Left" Margin="0,0,0,5" VerticalAlignment="Top" IsChecked="{Binding InBrowser}"/>
-            
-            <Button Content="Update" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="UpdateFavourite"/>
 
-            <Button Grid.Column="0" Content="Open" Margin="0,0,0,0" VerticalAlignment="Top" Height="22"/>
+            <Button Content="Update" Margin="0,0,0,5" VerticalAlignment="Top" Height="22" Click="UpdateFavourite"/>
         </StackPanel>
     </Grid>
 </UserControl>

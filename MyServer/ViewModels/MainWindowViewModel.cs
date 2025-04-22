@@ -17,6 +17,7 @@ namespace MyServer.ViewModels
         {
             _ctxMenu = CreateContextMenu();
             DomainStore.Instance.PropertyChanged += OnDomainStoreChanged;
+            FavouriteStore.Instance.PropertyChanged += OnFavouriteStoreChanged;
         }
 
         public ContextMenu CtxMenu
@@ -33,7 +34,14 @@ namespace MyServer.ViewModels
         {
             ContextMenu menu = new();
 
+            MenuItem reload = new() { Header = "Reload" };
+            reload.Click += RestartWorkServices;
+            menu.Items.Add(reload);
+
+            menu.Items.Add(new Separator());
+
             menu.Items.Add(CreateDomains());
+            menu.Items.Add(CreateFavourites());
 
             menu.Items.Add(new Separator());
 
@@ -62,6 +70,24 @@ namespace MyServer.ViewModels
             return domains;
         }
 
+        private MenuItem CreateFavourites()
+        {
+            MenuItem favourites = new() { Header = "Favourites" };
+
+            foreach (Favourite favourite in FavouriteStore.Instance.Favourites)
+            {
+                MenuItem item = new() { Header = favourite.Name, Tag = favourite };
+                item.Click += OpenFavourite;
+                favourites.Items.Add(item);
+            }
+
+            return favourites;
+        }
+        private void RestartWorkServices(object sender, RoutedEventArgs e)
+        {
+            Actions.RestartWorkServices.Invoke();
+        }
+
         private void OpenDomain(object sender, RoutedEventArgs e)
         {
             if (sender is MenuItem menuItem && menuItem.Tag is Domain domain)
@@ -75,6 +101,33 @@ namespace MyServer.ViewModels
                 }
             }
 
+        }
+
+        private void OpenFavourite(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem menuItem && menuItem.Tag is Favourite favourite)
+            {
+                var process = new Process();
+                process.StartInfo.FileName = favourite.FilePath.Replace("%myserverdir%", AppDomain.CurrentDomain.BaseDirectory);
+                if (favourite.InBrowser)
+                {
+                    process.StartInfo.UseShellExecute = true;
+                }
+                else
+                {
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.Arguments = favourite.Arguments;
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                }
+                try
+                {
+                    process.Start();
+                }
+                catch
+                {
+                    MessageBox.Show($"Произошла ошибка при запуске избранного");
+                }
+            }
         }
 
         private void ShowMainWindow(object sender, RoutedEventArgs e)
@@ -125,6 +178,14 @@ namespace MyServer.ViewModels
         private void OnDomainStoreChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DomainStore.Domains))
+            {
+                CtxMenu = CreateContextMenu();
+            }
+        }
+
+        private void OnFavouriteStoreChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(FavouriteStore.Favourites))
             {
                 CtxMenu = CreateContextMenu();
             }

@@ -29,7 +29,11 @@ namespace MyServer.UserControls
         {
             if (_viewModel.SelectedFavourite != null && _viewModel.SelectedFavourite is Favourite)
             {
-                FavouriteStore.Instance.DeleteFavourite(_viewModel.SelectedFavourite.Id);
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить избранное ?", "Удаление избранного", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    FavouriteStore.Instance.DeleteFavourite(_viewModel.SelectedFavourite.Id);
+                }
             }
             else
             {
