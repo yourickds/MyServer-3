@@ -48,6 +48,9 @@ namespace MyServer.Stores
         {
             _dbContext.Profiles.Update(profile);
             _dbContext.SaveChanges();
+
+            GenerateProfileBat.Invoke(profile);
+
             RefreshProfiles();
 
             //Получаем список доменов которые привязаны к профилю и пересоздаем конфиги
@@ -70,6 +73,7 @@ namespace MyServer.Stores
             var profile = _dbContext.Profiles.Find(id);
             if (profile != null)
             {
+                DeleteProfileBat.Invoke(profile);
                 _dbContext.Profiles.Remove(profile);
                 _dbContext.SaveChanges();
                 RefreshProfiles();
