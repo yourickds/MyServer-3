@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using MyServer.Actions;
 using MyServer.Models;
 
 namespace MyServer.Stores
@@ -47,6 +48,24 @@ namespace MyServer.Stores
             _dbContext.Modules.Update(module);
             _dbContext.SaveChanges();
             RefreshModules();
+
+            //Получаем все профили которые используют данный модуль
+            foreach(Profile profile in module.Profiles)
+            {
+                //Получаем список доменов которые привязаны к профилю и пересоздаем конфиги
+                foreach (Domain domain in profile.Domains)
+                {
+                    // Удаляем конфиги .conf.tpl и .conf
+                    DeleteConfigsDomain.Invoke(domain);
+                    // Создаем .conf.tpl
+                    CreateTemplateConfigDomain.Invoke(domain);
+                    // Генерируем конфиг для домена
+                    GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
+                }
+            }
+
+            // Перезапускаем службы
+            RestartWorkServices.Invoke();
         }
 
         public void DeleteModule(int id)

@@ -28,7 +28,18 @@ namespace MyServer.UserControls
         {
             if (_viewModel.SelectedModule != null && _viewModel.SelectedModule is Module)
             {
-                ModuleStore.Instance.DeleteModule(_viewModel.SelectedModule.Id);
+                // Проверяем есть ли у модуля профиля
+                if (_viewModel.SelectedModule.Profiles.Count > 0)
+                {
+                    MessageBox.Show("Нельзя удалить модуль который используется в профилях!", "Удаление модуля", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить модуль ?", "Удаление модуля", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    ModuleStore.Instance.DeleteModule(_viewModel.SelectedModule.Id);
+                }
             }
             else
             {
