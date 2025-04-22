@@ -49,6 +49,20 @@ namespace MyServer.Stores
             _dbContext.Profiles.Update(profile);
             _dbContext.SaveChanges();
             RefreshProfiles();
+
+            //Получаем список доменов которые привязаны к профилю и пересоздаем конфиги
+            foreach (Domain domain in profile.Domains)
+            {
+                // Удаляем конфиги .conf.tpl и .conf
+                DeleteConfigsDomain.Invoke(domain);
+                // Создаем .conf.tpl
+                CreateTemplateConfigDomain.Invoke(domain);
+                // Генерируем конфиг для домена
+                GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
+            }
+
+            // Перезапускаем службы
+            RestartWorkServices.Invoke();
         }
 
         public void DeleteProfile(int id)
