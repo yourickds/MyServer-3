@@ -1,10 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using MyServer.Actions;
-using MyServer.Models;
-using MyServer.Stores;
 
 namespace MyServer.UserControls
 {
@@ -20,7 +17,9 @@ namespace MyServer.UserControls
 
         private void GenerateConfigSerives(object sender, RoutedEventArgs e)
         {
-            GenerateConfigServices.Invoke();
+            RegenerateAllConfigs.Invoke();
+            // Перезапускаем службы
+            Actions.RestartWorkServices.Invoke();
         }
 
         private void OpenHostsFile(object sender, RoutedEventArgs e)
@@ -34,18 +33,9 @@ namespace MyServer.UserControls
             notepad.Start();
         }
 
-        private async void RestartWorkServices(object sender, RoutedEventArgs e)
+        private void RestartWorkServices(object sender, RoutedEventArgs e)
         {
-            // Получаем все службы
-            foreach (Service service in ServiceStore.Instance.Services)
-            {
-                if (service.Pid != null && GetStatusService.Invoke(service))
-                {
-                    GetStopService.Invoke(service);
-                    await Task.Delay(300); // Даём время на завершение процесса
-                    GetStartService.Invoke(service);
-                }
-            }
+            Actions.RestartWorkServices.Invoke();
         }
     }
 }

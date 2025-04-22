@@ -12,12 +12,9 @@ namespace MyServer
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
+            RegenerateAllConfigs.Invoke();
 
-            //Оичщаем на всякий файл Hosts
-            ClearDomainHosts.Invoke();
-            // Заполняем файл hosts
-            SetDomainHosts.Invoke();
+            base.OnStartup(e);
 
             //Получаем все службы и проверяем какие уже запущены и цепляем слушателя, а какие надо запустить
             foreach (Service service in ServiceStore.Instance.Services)
