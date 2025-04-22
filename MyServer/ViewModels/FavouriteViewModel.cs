@@ -46,6 +46,7 @@ namespace MyServer.ViewModels
                 View = _selectedFavourite != null
                     ? new UpdateFavouriteUserControl(_selectedFavourite)
                     : new CreateFavouriteUserControl();
+                OnPropertyChanged();
             }
         }
 
