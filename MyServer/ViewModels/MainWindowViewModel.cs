@@ -115,6 +115,7 @@ namespace MyServer.ViewModels
                 }
                 else
                 {
+                    process.StartInfo.EnvironmentVariables["PATH"] = AppDomain.CurrentDomain.BaseDirectory + "userdata\\profiles";
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.Arguments = favourite.Arguments;
                     process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
