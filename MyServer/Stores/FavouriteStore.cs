@@ -20,15 +20,7 @@ namespace MyServer.Stores
         {
             _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
-
-            var favourites = _dbContext.Favourites.ToList();
-            foreach (var favourite in favourites)
-            {
-                favourite.FilePath = favourite.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-                favourite.Arguments = favourite.Arguments?.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-            }
-
-            _favourites = new ObservableCollection<Favourite>(favourites);
+            _favourites = new ObservableCollection<Favourite>(_dbContext.Favourites.ToList());
         }
 
         public ObservableCollection<Favourite> Favourites
@@ -78,13 +70,7 @@ namespace MyServer.Stores
 
         private void RefreshFavourites()
         {
-            var favourites = _dbContext.Favourites.ToList();
-            foreach (var favourite in favourites)
-            {
-                favourite.FilePath = favourite.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-                favourite.Arguments = favourite.Arguments?.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
-            }
-            Favourites = new ObservableCollection<Favourite>(favourites);
+            Favourites = new ObservableCollection<Favourite>(_dbContext.Favourites.ToList());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

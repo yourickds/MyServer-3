@@ -10,8 +10,8 @@ namespace MyServer.ViewModels
         {
             SelectedFavourite = selectedFavourite;
             Name = SelectedFavourite.Name;
-            FilePath = SelectedFavourite.FilePath;
-            Arguments = SelectedFavourite.Arguments;
+            FilePath = SelectedFavourite.FilePath.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
+            Arguments = SelectedFavourite.Arguments?.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory);
             InBrowser = SelectedFavourite.InBrowser;
         }
     }
