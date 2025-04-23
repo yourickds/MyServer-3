@@ -38,7 +38,7 @@ namespace MyServer.Actions
             {
                 //MessageBox.Show($"Процесс завершился или недоступен.");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
             }
