@@ -2,7 +2,7 @@
 
 namespace MyServer.Actions
 {
-    public static class GenerateConfigServices
+    public static class GenerateTplConfigs
     {
         public static void Invoke()
         {

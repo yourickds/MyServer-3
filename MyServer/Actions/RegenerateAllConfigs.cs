@@ -20,9 +20,10 @@ namespace MyServer.Actions
                 DeleteConfigsDomain.Invoke(domain);
                 // Создаем .conf.tpl
                 CreateTemplateConfigDomain.Invoke(domain);
-                // Генерируем конфиг для домена
-                GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
             }
+
+            // Генерируем все конфиги
+            GenerateTplConfigs.Invoke();
 
             // Пересоздаем файл Hosts
             ClearDomainHosts.Invoke();
