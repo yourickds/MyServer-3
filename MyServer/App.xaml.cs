@@ -10,8 +10,21 @@ namespace MyServer
     /// </summary>
     public partial class App : Application
     {
+        private const string MutexName = "MyServerMutexUniqueFix";
+        private static Mutex? _mutex;
         protected override void OnStartup(StartupEventArgs e)
         {
+            bool createdNew;
+            _mutex = new Mutex(true, MutexName, out createdNew);
+
+            if (!createdNew)
+            {
+                // Приложение уже запущено
+                MessageBox.Show("Приложение уже запущено", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Environment.Exit(0); // Немедленное завершение без вызова обработчиков
+                return;
+            }
+
             RegenerateAllConfigs.Invoke();
 
             base.OnStartup(e);
@@ -50,6 +63,9 @@ namespace MyServer
             }
             // Очищаем файл Hosts
             ClearDomainHosts.Invoke();
+
+            _mutex?.ReleaseMutex();
+            _mutex?.Dispose();
             base.OnExit(e);
         }
     }
