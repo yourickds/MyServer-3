@@ -62,8 +62,14 @@ namespace MyServer.ViewModels
 
             foreach (Domain domain in DomainStore.Instance.Domains)
             {
-                MenuItem item = new() { Header = domain.Name, Tag = domain };
-                item.Click += OpenDomain;
+                MenuItem item = new() { Header = domain.Name };
+                MenuItem browser = new() { Header = "Открыть в браузере", Tag = domain };
+                browser.Click += OpenDomainBrowser;
+                item.Items.Add(browser);
+                MenuItem explorer = new() { Header = "Открыть в проводнике", Tag = domain };
+                explorer.Click += OpenDomainExplorer;
+                item.Items.Add(explorer);
+
                 domains.Items.Add(item);
             }
 
@@ -88,7 +94,7 @@ namespace MyServer.ViewModels
             Actions.RestartWorkServices.Invoke();
         }
 
-        private void OpenDomain(object sender, RoutedEventArgs e)
+        private void OpenDomainBrowser(object sender, RoutedEventArgs e)
         {
             if (sender is MenuItem menuItem && menuItem.Tag is Domain domain)
             {
@@ -100,7 +106,17 @@ namespace MyServer.ViewModels
                     process.Start();
                 }
             }
+        }
 
+        private void OpenDomainExplorer(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem menuItem && menuItem.Tag is Domain domain)
+            {
+                if (!String.IsNullOrEmpty(domain.Name) && System.IO.Directory.Exists("domains/" + domain.Name))
+                {
+                    Process.Start("explorer.exe", System.IO.Path.GetFullPath("domains/" + domain.Name));
+                }
+            }
         }
 
         private void OpenFavourite(object sender, RoutedEventArgs e)
