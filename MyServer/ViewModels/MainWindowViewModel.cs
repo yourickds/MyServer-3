@@ -115,7 +115,7 @@ namespace MyServer.ViewModels
                 }
                 else
                 {
-                    process.StartInfo.EnvironmentVariables["PATH"] = AppDomain.CurrentDomain.BaseDirectory + "userdata\\profiles";
+                    process.StartInfo.EnvironmentVariables["PATH"] = AppDomain.CurrentDomain.BaseDirectory + "userdata\\profiles;" + AppDomain.CurrentDomain.BaseDirectory + "modules\\GIT\\cmd;";
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.Arguments = favourite.Arguments;
                     process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
