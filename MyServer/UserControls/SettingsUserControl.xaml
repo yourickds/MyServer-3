@@ -7,10 +7,65 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
-        <StackPanel>
-            <Button Content="Открыть файл Hosts в блокноте" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22" Click="OpenHostsFile" Padding="2"/>
-            <Button Content="Пересоздать конфигурационные файлы" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22" Click="GenerateConfigSerives" Padding="2"/>
-            <Button Content="Перезапустить службы" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Height="22" Click="RestartWorkServices"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="0">
+                    <Label Content="Переменная PATH" Padding="0"/>
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Height="22" VerticalContentAlignment="Center" Text="{Binding NamePath}"/>
+                        <Button Grid.Column="2" Content="..." Height="22" Padding="2" Click="OpenDialogDirectoryPath"/>
+                    </Grid>
+                    <Button Margin="0,5,0,0" Content="Добавить" Height="22" Click="AddPath"/>
+                </StackPanel>
+
+                <ListBox Grid.Row="1" Margin="0,5,0,0" ItemsSource="{Binding Paths}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPath}"/>
+
+                <Button Grid.Row="2" Margin="0,5,0,0" Content="Удалить" Height="22" Click="DeletePath"/>
+            </Grid>
+            
+            <Grid Grid.Column="1" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="0">
+                    <Label Content="Файл HOSTS" Padding="0"/>
+                    <TextBox Margin="0,5,0,0" Height="22" VerticalContentAlignment="Center"/>
+                    <Button Margin="0,5,0,0" Content="Добавить" Height="22"/>
+                </StackPanel>
+                <ListBox Grid.Row="1" Margin="0,5,0,0"/>
+                <Button Grid.Row="2" Margin="0,5,0,0" Content="Удалить" Height="22"/>
+            </Grid>
+        </Grid>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
+            <Button Content="Открыть файл Hosts в блокноте" HorizontalAlignment="Left" Margin="0,0,5,0" VerticalAlignment="Top" Height="22" Click="OpenHostsFile" Padding="2"/>
+            <Button Content="Пересоздать конфигурационные файлы" HorizontalAlignment="Left" Margin="0,0,5,0" VerticalAlignment="Top" Height="22" Click="GenerateConfigSerives" Padding="2"/>
+            <Button Content="Перезапустить службы" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="22" Click="RestartWorkServices"/>
         </StackPanel>
     </Grid>
 </UserControl>

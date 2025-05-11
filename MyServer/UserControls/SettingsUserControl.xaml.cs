@@ -1,7 +1,11 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
 using MyServer.Actions;
+using MyServer.Stores;
+using MyServer.ViewModels;
 
 namespace MyServer.UserControls
 {
@@ -10,9 +14,13 @@ namespace MyServer.UserControls
     /// </summary>
     public partial class SettingsUserControl : UserControl
     {
+        private readonly SettingViewModel _viewModel;
+
         public SettingsUserControl()
         {
             InitializeComponent();
+            _viewModel = new SettingViewModel();
+            DataContext = _viewModel;
         }
 
         private void GenerateConfigSerives(object sender, RoutedEventArgs e)
@@ -36,6 +44,62 @@ namespace MyServer.UserControls
         private void RestartWorkServices(object sender, RoutedEventArgs e)
         {
             Actions.RestartWorkServices.Invoke();
+        }
+
+        private void OpenDialogDirectoryPath(object sender, RoutedEventArgs e)
+        {
+            OpenFolderDialog openFolderDialog = new();
+
+            if (openFolderDialog.ShowDialog() == true)
+            {
+                _viewModel.NamePath = openFolderDialog.FolderName;
+            }
+        }
+
+        private void AddPath(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(_viewModel.NamePath))
+            {
+                MessageBox.Show("Field `NamePath` is required");
+                return;
+            }
+
+            if (!Directory.Exists(_viewModel.NamePath))
+            {
+                MessageBox.Show("Directory Not Found");
+                return;
+            }
+
+            Models.Path newPath = new()
+            {
+                Name = _viewModel.NamePath,
+            };
+
+            // Проверяем перед добавлением
+            if (SettingStore.Instance.Paths.Any(p => p.Name == newPath.Name))
+            {
+                MessageBox.Show("Path already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; // Прерываем выполнение
+            }
+
+            SettingStore.Instance.AddPath(newPath);
+            MessageBox.Show("Added Path");
+        }
+
+        private void DeletePath(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.SelectedPath != null && _viewModel.SelectedPath is Models.Path)
+            {
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить Path?", "Удаление Path", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SettingStore.Instance.DeletePath(_viewModel.SelectedPath.Id);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selected Path");
+            }
         }
     }
 }
