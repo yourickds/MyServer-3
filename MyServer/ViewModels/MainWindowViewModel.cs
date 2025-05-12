@@ -131,7 +131,15 @@ namespace MyServer.ViewModels
                 }
                 else
                 {
-                    process.StartInfo.EnvironmentVariables["PATH"] = AppDomain.CurrentDomain.BaseDirectory + "userdata\\profiles;" + AppDomain.CurrentDomain.BaseDirectory + "modules\\GIT\\cmd;";
+                    string environmentPath = "";
+                    string? pathVariable = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
+                    
+                    // Получаем добавленные PATH
+                    foreach (Path path in SettingStore.Instance.Paths)
+                    {
+                        environmentPath += path.Name.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory) + ";";
+                    }
+                    process.StartInfo.EnvironmentVariables["PATH"] = environmentPath + pathVariable;
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.Arguments = favourite.Arguments;
                     process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
