@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using MyServer.Models;
 using MyServer.Stores;
 
@@ -9,17 +10,6 @@ namespace MyServer.ViewModels
 {
     public class SettingViewModel: INotifyPropertyChanged
     {
-        private string? _namePath;
-
-        private Path? _selectedPath = null;
-
-        public ObservableCollection<Path> Paths => SettingStore.Instance.Paths;
-        public string? NamePath
-        {
-            get => _namePath;
-            set { _namePath = value; OnPropertyChanged(); }
-        }
-
         public SettingViewModel()
         {
             SettingStore.Instance.PropertyChanged += (s, e) =>
@@ -29,6 +19,24 @@ namespace MyServer.ViewModels
                     OnPropertyChanged(nameof(Paths));
                 }
             };
+        }
+
+        private string? _namePath;
+
+        private Path? _selectedPath = null;
+
+        public ObservableCollection<Path> Paths => new (
+            SettingStore.Instance.Paths.Select(path => new Path
+            {
+                Id = path.Id,
+                Name = path.Name.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory)
+            })
+        );
+
+        public string? NamePath
+        {
+            get => _namePath;
+            set { _namePath = value; OnPropertyChanged(); }
         }
 
         public Path? SelectedPath
