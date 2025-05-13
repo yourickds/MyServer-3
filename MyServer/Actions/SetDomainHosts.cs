@@ -13,6 +13,15 @@ namespace MyServer.Actions
             {
                 using StreamWriter sw = File.AppendText(Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "/System32/drivers/etc/hosts");
                 sw.WriteLine("\n# MyServer");
+                foreach (Host host in SettingStore.Instance.Hosts)
+                {
+                    sw.WriteLine($"{host.Ip}\t{host.Name}");
+                    // Добавляем в netsh
+                    if (ValidateIpAddress.Invoke(host.Ip))
+                    {
+                        AddLoopbackIp.Invoke(host.Ip);
+                    }
+                }
                 foreach (Domain domain in DomainStore.Instance.Domains)
                 {
                     sw.WriteLine("127.0.0.1\t" + domain.Name + ".local");

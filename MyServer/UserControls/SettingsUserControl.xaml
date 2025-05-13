@@ -53,12 +53,15 @@
                 </Grid.RowDefinitions>
                 
                 <StackPanel Grid.Row="0">
-                    <Label Content="Файл HOSTS" Padding="0"/>
-                    <TextBox Margin="0,5,0,0" Height="22" VerticalContentAlignment="Center"/>
-                    <Button Margin="0,5,0,0" Content="Добавить" Height="22"/>
+                    <Label Content="Файл HOSTS" Padding="0" Margin="0,0,0,5"/>
+                    <Label Content="Домен" Padding="0" Margin="0,5,0,0"/>
+                    <TextBox Margin="0,5,0,0" Height="22" VerticalContentAlignment="Center" Text="{Binding DomainHost}"/>
+                    <Label Content="Ip" Padding="0" Margin="0,5,0,0"/>
+                    <TextBox Margin="0,5,0,0" Height="22" VerticalContentAlignment="Center" Text="{Binding IpHost}"/>
+                    <Button Margin="0,5,0,0" Content="Добавить" Height="22" Click="AddHost"/>
                 </StackPanel>
-                <ListBox Grid.Row="1" Margin="0,5,0,0"/>
-                <Button Grid.Row="2" Margin="0,5,0,0" Content="Удалить" Height="22"/>
+                <ListBox Grid.Row="1" Margin="0,5,0,0" ItemsSource="{Binding Hosts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedHost}"/>
+                <Button Grid.Row="2" Margin="0,5,0,0" Content="Удалить" Height="22" Click="DeleteHost"/>
             </Grid>
         </Grid>
         

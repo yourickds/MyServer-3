@@ -86,6 +86,46 @@ namespace MyServer.UserControls
             MessageBox.Show("Added Path");
         }
 
+        private void AddHost(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(_viewModel.DomainHost))
+            {
+                MessageBox.Show("Field `DomainHost` is required");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(_viewModel.IpHost))
+            {
+                MessageBox.Show("Field `IpHost` is required");
+                return;
+            }
+
+            if (!System.Net.IPAddress.TryParse(_viewModel.IpHost, out var address))
+            {
+                MessageBox.Show("Field `IpHost` is ip address");
+                return;
+            }
+
+            Models.Host newHost = new()
+            {
+                Name = _viewModel.DomainHost,
+                Ip = _viewModel.IpHost,
+            };
+
+            // Проверяем перед добавлением
+            if (SettingStore.Instance.Hosts.Any(h => h.Name == newHost.Name))
+            {
+                MessageBox.Show("Host already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; // Прерываем выполнение
+            }
+
+            SettingStore.Instance.AddHost(newHost);
+            // Пересоздаем файл Hosts
+            ClearDomainHosts.Invoke();
+            SetDomainHosts.Invoke();
+            MessageBox.Show("Added Host");
+        }
+
         private void DeletePath(object sender, RoutedEventArgs e)
         {
             if (_viewModel.SelectedPath != null && _viewModel.SelectedPath is Models.Path)
@@ -99,6 +139,26 @@ namespace MyServer.UserControls
             else
             {
                 MessageBox.Show("Selected Path");
+            }
+        }
+
+        private void DeleteHost(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.SelectedHost != null && _viewModel.SelectedHost is Models.Host)
+            {
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить Host?", "Удаление Host", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    RemoveLoopbackIp.Invoke(_viewModel.SelectedHost.Ip);
+                    SettingStore.Instance.DeleteHost(_viewModel.SelectedHost.Id);
+                    // Пересоздаем файл Hosts
+                    ClearDomainHosts.Invoke();
+                    SetDomainHosts.Invoke();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selected Host");
             }
         }
     }

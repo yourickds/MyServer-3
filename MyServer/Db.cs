@@ -13,6 +13,7 @@ namespace MyServer
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Domain> Domains { get; set; }
         public DbSet<Path> Paths { get; set; }
+        public DbSet<Host> Hosts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

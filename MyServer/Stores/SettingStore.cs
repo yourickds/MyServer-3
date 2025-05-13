@@ -16,11 +16,14 @@ namespace MyServer.Stores
 
         private ObservableCollection<Path> _paths;
 
+        private ObservableCollection<Host> _hosts;
+
         public SettingStore()
         {
             _dbContext = Db.Instance;
             _dbContext.Database.EnsureCreated();
             _paths = new ObservableCollection<Path>(_dbContext.Paths.ToList());
+            _hosts = new ObservableCollection<Host>(_dbContext.Hosts.ToList());
         }
 
         public ObservableCollection<Path> Paths
@@ -33,12 +36,29 @@ namespace MyServer.Stores
             }
         }
 
+        public ObservableCollection<Host> Hosts
+        {
+            get => _hosts;
+            private set
+            {
+                _hosts = value;
+                OnPropertyChanged(nameof(Hosts));
+            }
+        }
+
         public void AddPath(Path path)
         {
             path.Name = Regex.Replace(path.Name, Regex.Escape(AppDomain.CurrentDomain.BaseDirectory), "%myserverdir%\\", RegexOptions.IgnoreCase);
             _dbContext.Paths.Add(path);
             _dbContext.SaveChanges();
             RefreshPaths();
+        }
+
+        public void AddHost(Host host)
+        {
+            _dbContext.Hosts.Add(host);
+            _dbContext.SaveChanges();
+            RefreshHosts();
         }
 
         public void DeletePath(int id)
@@ -51,9 +71,25 @@ namespace MyServer.Stores
                 RefreshPaths();
             }
         }
+
+        public void DeleteHost(int id)
+        {
+            var host = _dbContext.Hosts.Find(id);
+            if (host != null)
+            {
+                _dbContext.Hosts.Remove(host);
+                _dbContext.SaveChanges();
+                RefreshHosts();
+            }
+        }
         private void RefreshPaths()
         {
             Paths = new ObservableCollection<Path>(_dbContext.Paths.ToList());
+        }
+
+        private void RefreshHosts()
+        {
+            Hosts = new ObservableCollection<Host>(_dbContext.Hosts.ToList());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
