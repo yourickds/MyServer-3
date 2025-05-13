@@ -63,6 +63,8 @@ namespace MyServer
             }
             // Очищаем файл Hosts
             ClearDomainHosts.Invoke();
+            // Очищаем netsh
+            RemoveAllLoopbackIps.Invoke();
 
             _mutex?.ReleaseMutex();
             _mutex?.Dispose();

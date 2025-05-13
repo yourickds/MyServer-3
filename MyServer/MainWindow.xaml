@@ -33,6 +33,9 @@
             <TabItem Header="Path">
                 <userControls:PathUserControl/>
             </TabItem>
+            <TabItem Header="Host">
+                <userControls:HostUserControl/>
+            </TabItem>
             <TabItem Header="Settings">
                 <userControls:SettingsUserControl/>
             </TabItem>

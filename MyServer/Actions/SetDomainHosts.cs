@@ -13,7 +13,7 @@ namespace MyServer.Actions
             {
                 using StreamWriter sw = File.AppendText(Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "/System32/drivers/etc/hosts");
                 sw.WriteLine("\n# MyServer");
-                foreach (Host host in SettingStore.Instance.Hosts)
+                foreach (Host host in HostStore.Instance.Hosts)
                 {
                     sw.WriteLine($"{host.Ip}\t{host.Name}");
                     // Добавляем в netsh
