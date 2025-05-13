@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
+VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyServer", "MyServer\MyServer.csproj", "{EAA4BE0F-B100-45C4-A8BC-4D1B0B558658}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHPManager", "PHPManager\PHPManager.csproj", "{33188CDF-3098-4FDF-A044-70BF76D1089B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{EAA4BE0F-B100-45C4-A8BC-4D1B0B558658}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAA4BE0F-B100-45C4-A8BC-4D1B0B558658}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAA4BE0F-B100-45C4-A8BC-4D1B0B558658}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33188CDF-3098-4FDF-A044-70BF76D1089B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33188CDF-3098-4FDF-A044-70BF76D1089B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33188CDF-3098-4FDF-A044-70BF76D1089B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33188CDF-3098-4FDF-A044-70BF76D1089B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97922514-6214-4401-A6D5-AF4B62252B73}
 	EndGlobalSection
 EndGlobal
