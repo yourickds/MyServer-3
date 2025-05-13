@@ -1,4 +1,4 @@
-﻿namespace PHPManager.Actions
+﻿namespace ComposerManager.Actions
 {
     public class GetMyServerDir
     {

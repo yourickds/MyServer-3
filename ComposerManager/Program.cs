@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using PHPManager.Actions;
+using ComposerManager.Actions;
 
 string workingDirectory = Environment.CurrentDirectory;
 string folderName = Path.GetFileName(workingDirectory);
@@ -17,7 +17,7 @@ catch (InvalidOperationException e)
     return;
 }
 
-using (var db = new PHPManager.Db())
+using (var db = new ComposerManager.Db())
 {
     var domain = db.Domains.AsNoTracking().FirstOrDefault(d => d.Name == folderName);
     if (domain == null)
@@ -28,7 +28,6 @@ using (var db = new PHPManager.Db())
 
     // Получить профиль домена
     var profile = db.Profiles.Include(p => p.Modules).AsNoTracking().FirstOrDefault(p => p.Id == domain.ProfileId);
-
     if (profile == null)
     {
         Console.WriteLine("Профиль не найден!");
@@ -45,11 +44,21 @@ using (var db = new PHPManager.Db())
 
     string DirPHP = php.Dir.Replace("%myserverdir%", MyServerDir);
 
+    // Определяем Composer
+    var composer = profile.Modules.FirstOrDefault(m => m.Variable == "%COMPOSER%");
+    if (composer == null)
+    {
+        Console.WriteLine("Ну удалось определить версию COMPOSER");
+        return;
+    }
+
+    string DirCOMPOSER = composer.Dir.Replace("%myserverdir%", MyServerDir);
+
     using Process process = new();
     process.StartInfo = new ProcessStartInfo
     {
         FileName = Path.Combine(DirPHP, "php.exe"),
-        Arguments = string.Join(" ", args) + " --ansi",
+        Arguments = Path.Combine(DirCOMPOSER, "composer.phar") + " " + string.Join(" ", args) + " --ansi",
         WorkingDirectory = workingDirectory,
         RedirectStandardOutput = true,
         RedirectStandardError = true,
