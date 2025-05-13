@@ -13,11 +13,6 @@ namespace MyServer.ViewModels
         {
             SettingStore.Instance.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(SettingStore.Paths))
-                {
-                    OnPropertyChanged(nameof(Paths));
-                }
-
                 if (e.PropertyName == nameof(SettingStore.Hosts))
                 {
                     OnPropertyChanged(nameof(Hosts));
@@ -25,30 +20,13 @@ namespace MyServer.ViewModels
             };
         }
 
-        private string? _namePath;
-
         private string? _domainHost;
         private string? _ipHost;
 
-        private Path? _selectedPath = null;
-
         private Host? _selectedHost = null;
-
-        public ObservableCollection<Path> Paths => new (
-            SettingStore.Instance.Paths.Select(path => new Path
-            {
-                Id = path.Id,
-                Name = path.Name.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory)
-            })
-        );
 
         public ObservableCollection<Host> Hosts => SettingStore.Instance.Hosts;
 
-        public string? NamePath
-        {
-            get => _namePath;
-            set { _namePath = value; OnPropertyChanged(); }
-        }
 
         public string? DomainHost
         {
@@ -62,14 +40,6 @@ namespace MyServer.ViewModels
             set { _ipHost = value; OnPropertyChanged(); }
         }
 
-        public Path? SelectedPath
-        {
-            get => _selectedPath;
-            set
-            {
-                _selectedPath = value;
-            }
-        }
 
         public Host? SelectedHost
         {

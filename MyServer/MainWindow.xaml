@@ -30,6 +30,9 @@
             <TabItem Header="Services">
                 <userControls:ServiceUserControl/>
             </TabItem>
+            <TabItem Header="Path">
+                <userControls:PathUserControl/>
+            </TabItem>
             <TabItem Header="Settings">
                 <userControls:SettingsUserControl/>
             </TabItem>

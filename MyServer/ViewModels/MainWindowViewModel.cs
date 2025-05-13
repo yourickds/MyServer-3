@@ -135,9 +135,9 @@ namespace MyServer.ViewModels
                     string? pathVariable = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
                     
                     // Получаем добавленные PATH
-                    foreach (Path path in SettingStore.Instance.Paths)
+                    foreach (Path path in PathStore.Instance.Paths)
                     {
-                        environmentPath += path.Name.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory) + ";";
+                        environmentPath += path.Dir.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory) + ";";
                     }
                     process.StartInfo.EnvironmentVariables["PATH"] = environmentPath + pathVariable;
                     process.StartInfo.UseShellExecute = false;

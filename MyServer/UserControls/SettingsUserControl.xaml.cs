@@ -46,46 +46,6 @@ namespace MyServer.UserControls
             Actions.RestartWorkServices.Invoke();
         }
 
-        private void OpenDialogDirectoryPath(object sender, RoutedEventArgs e)
-        {
-            OpenFolderDialog openFolderDialog = new();
-
-            if (openFolderDialog.ShowDialog() == true)
-            {
-                _viewModel.NamePath = openFolderDialog.FolderName;
-            }
-        }
-
-        private void AddPath(object sender, RoutedEventArgs e)
-        {
-            if (String.IsNullOrEmpty(_viewModel.NamePath))
-            {
-                MessageBox.Show("Field `NamePath` is required");
-                return;
-            }
-
-            if (!Directory.Exists(_viewModel.NamePath))
-            {
-                MessageBox.Show("Directory Not Found");
-                return;
-            }
-
-            Models.Path newPath = new()
-            {
-                Name = _viewModel.NamePath,
-            };
-
-            // Проверяем перед добавлением
-            if (SettingStore.Instance.Paths.Any(p => p.Name == newPath.Name))
-            {
-                MessageBox.Show("Path already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return; // Прерываем выполнение
-            }
-
-            SettingStore.Instance.AddPath(newPath);
-            MessageBox.Show("Added Path");
-        }
-
         private void AddHost(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(_viewModel.DomainHost))
@@ -124,22 +84,6 @@ namespace MyServer.UserControls
             ClearDomainHosts.Invoke();
             SetDomainHosts.Invoke();
             MessageBox.Show("Added Host");
-        }
-
-        private void DeletePath(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel.SelectedPath != null && _viewModel.SelectedPath is Models.Path)
-            {
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить Path?", "Удаление Path", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    SettingStore.Instance.DeletePath(_viewModel.SelectedPath.Id);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Selected Path");
-            }
         }
 
         private void DeleteHost(object sender, RoutedEventArgs e)
