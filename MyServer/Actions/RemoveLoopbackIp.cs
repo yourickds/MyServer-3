@@ -1,5 +1,6 @@
 ﻿
 using System.Diagnostics;
+using System.Windows;
 
 namespace MyServer.Actions
 {
@@ -10,7 +11,7 @@ namespace MyServer.Actions
             var processInfo = new ProcessStartInfo
             {
                 FileName = "netsh",
-                Arguments = $"interface ipv4 delete address 1 {ipAddress}",
+                Arguments = $"interface ipv4 delete address {Properties.Settings.Default.IdPseudoInterface} {ipAddress}",
                 Verb = "runas",
                 UseShellExecute = false,
                 CreateNoWindow = true,
