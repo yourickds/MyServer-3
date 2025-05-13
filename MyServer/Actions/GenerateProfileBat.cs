@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using MyServer.Models;
+using MyServer.Stores;
 
 namespace MyServer.Actions
 {
@@ -19,7 +20,11 @@ namespace MyServer.Actions
                     {
                         content += module.Dir.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory) + ";";
                     }
-
+                    foreach (var path in PathStore.Instance.Paths)
+                    {
+                        content += path.Dir.Replace("%myserverdir%\\", AppDomain.CurrentDomain.BaseDirectory) + ";";
+                    }
+                    content += Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
                     StreamWriter writer = new("userdata/profiles/" + profile.Name + ".bat");
                     writer.Write(content);
                     writer.Close();
