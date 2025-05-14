@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Windows;
 using MyServer.Actions;
 using MyServer.Models;
 using MyServer.Stores;
@@ -26,6 +28,47 @@ namespace MyServer
             }
 
             RegenerateAllConfigs.Invoke();
+
+            // e.Args содержит массив аргументов командной строки
+            if (e.Args.Length > 0)
+            {
+                foreach (var arg in e.Args)
+                {
+                    // Пример: обработка конкретного флага
+                    if (arg == "--initialize")
+                    {
+                        MessageBox.Show(System.IO.Path.Combine(Environment.CurrentDirectory, "Init.bat"));
+                        if (!File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, "Init.bat")))
+                        {
+                            MessageBox.Show("Не найден файл для инициализация 'Init.bat'");
+                            Environment.Exit(0);
+                            return;
+                        }
+                        using Process process = new();
+                        process.StartInfo = new ProcessStartInfo
+                        {
+                            FileName = "Init.bat",
+                            WorkingDirectory = Environment.CurrentDirectory,
+                            UseShellExecute = true,
+                            WindowStyle = ProcessWindowStyle.Normal,
+                            CreateNoWindow = false
+                        };
+
+                        try
+                        {
+                            process.Start();
+                            process.WaitForExit();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка при запуске: {ex.Message}");
+                            Environment.Exit(0);
+                            return;
+
+                        }
+                    }
+                }
+            }
 
             base.OnStartup(e);
 

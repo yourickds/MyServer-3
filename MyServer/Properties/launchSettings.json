@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MyServer": {
+      "commandName": "Project",
+      "commandLineArgs": "--initialize"
+    }
+  }
+}
