@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Windows;
+using Microsoft.EntityFrameworkCore;
+using MyServer.Actions;
 using MyServer.Models;
 
 namespace MyServer
@@ -17,7 +19,16 @@ namespace MyServer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=MyDatabase.db");
+            try
+            {
+                string appDirectory = GetMyServerDir.Invoke() + "\\MyDatabase.db";
+                optionsBuilder.UseSqlite("Data Source=" + appDirectory);
+            }
+            catch (InvalidOperationException e)
+            {
+                MessageBox.Show(e.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
+            }
         }
     }
 }

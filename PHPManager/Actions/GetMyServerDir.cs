@@ -4,7 +4,7 @@
     {
         public static string Invoke()
         {
-            string? path = Environment.GetEnvironmentVariable("MyServerDir", EnvironmentVariableTarget.User);
+            string? path = Environment.GetEnvironmentVariable("MyServerDir", EnvironmentVariableTarget.Machine);
             if (String.IsNullOrEmpty(path))
             {
                 throw new InvalidOperationException("Не удалось найти путь до MyServer!");
