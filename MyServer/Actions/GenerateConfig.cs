@@ -10,7 +10,9 @@ namespace MyServer.Actions
             {
                 // Удаляем старый конфиг, если есть
                 if (File.Exists(file.Replace(".tpl", "")))
+                {
                     File.Delete(file.Replace(".tpl", ""));
+                }
                 // Генерируем новый конфиг
                 StreamReader reader = new(file);
                 string content = reader.ReadToEnd();
