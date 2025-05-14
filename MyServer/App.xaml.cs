@@ -37,8 +37,19 @@ namespace MyServer
                     // Пример: обработка конкретного флага
                     if (arg == "--initialize")
                     {
-                        MessageBox.Show(System.IO.Path.Combine(Environment.CurrentDirectory, "Init.bat"));
-                        if (!File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, "Init.bat")))
+                        string MyServerDir;
+                        try
+                        {
+                            MyServerDir = GetMyServerDir.Invoke();
+                        }
+                        catch (InvalidOperationException exception)
+                        {
+                            MessageBox.Show(exception.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            Environment.Exit(0);
+                            return;
+                        }
+
+                        if (!File.Exists(System.IO.Path.Combine(MyServerDir, "Init.bat")))
                         {
                             MessageBox.Show("Не найден файл для инициализация 'Init.bat'");
                             Environment.Exit(0);
@@ -48,7 +59,7 @@ namespace MyServer
                         process.StartInfo = new ProcessStartInfo
                         {
                             FileName = "Init.bat",
-                            WorkingDirectory = Environment.CurrentDirectory,
+                            WorkingDirectory = MyServerDir,
                             UseShellExecute = true,
                             WindowStyle = ProcessWindowStyle.Normal,
                             CreateNoWindow = false
