@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using MyServer.Actions;
 using MyServer.Models;
 using MyServer.Stores;
 using MyServer.ViewModels;
@@ -99,6 +100,8 @@ namespace MyServer.UserControls
                     return;
                 }
             }
+
+            Certificate.Delete(SelectedDomain.Name);
 
             SelectedDomain.Name = _viewModel.Name;
             SelectedDomain.DocumentRoot = _viewModel.DocumentRoot;

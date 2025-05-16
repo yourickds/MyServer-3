@@ -37,45 +37,11 @@ namespace MyServer
                     // Пример: обработка конкретного флага
                     if (arg == "--initialize")
                     {
-                        string MyServerDir;
-                        try
+                        Init.Invoke();
+                        // Проходим по всем доменам и создаем им сертификаты
+                        foreach (Domain domain in DomainStore.Instance.Domains)
                         {
-                            MyServerDir = GetMyServerDir.Invoke();
-                        }
-                        catch (InvalidOperationException exception)
-                        {
-                            MessageBox.Show(exception.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                            Environment.Exit(0);
-                            return;
-                        }
-
-                        if (!File.Exists(System.IO.Path.Combine(MyServerDir, "Init.bat")))
-                        {
-                            MessageBox.Show("Не найден файл для инициализация 'Init.bat'");
-                            Environment.Exit(0);
-                            return;
-                        }
-                        using Process process = new();
-                        process.StartInfo = new ProcessStartInfo
-                        {
-                            FileName = "Init.bat",
-                            WorkingDirectory = MyServerDir,
-                            UseShellExecute = true,
-                            WindowStyle = ProcessWindowStyle.Normal,
-                            CreateNoWindow = false
-                        };
-
-                        try
-                        {
-                            process.Start();
-                            process.WaitForExit();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Ошибка при запуске: {ex.Message}");
-                            Environment.Exit(0);
-                            return;
-
+                            Certificate.Create(domain.Name);
                         }
                     }
                 }

@@ -38,6 +38,10 @@ namespace MyServer.Stores
             _dbContext.Domains.Add(domain);
             _dbContext.SaveChanges();
 
+            //Здесь надо выполнить экшен на создание сертификата, при запуске сервер нет смысла их заново пересоздавать или ?!
+
+            Certificate.Create(domain.Name);
+
             // Создаем .conf.tpl
             CreateTemplateConfigDomain.Invoke(domain);
             // Генерируем конфиг для домена
@@ -50,6 +54,8 @@ namespace MyServer.Stores
         {
             _dbContext.Domains.Update(domain);
             _dbContext.SaveChanges();
+
+            Certificate.Create(domain.Name);
 
             // Удаляем конфиги .conf.tpl и .conf
             DeleteConfigsDomain.Invoke(domain);
@@ -66,6 +72,7 @@ namespace MyServer.Stores
             var domain = _dbContext.Domains.Find(id);
             if (domain != null)
             {
+                Certificate.Delete(domain.Name);
                 // Удаляем конфиги .conf.tpl и .conf
                 DeleteConfigsDomain.Invoke(domain);
              
