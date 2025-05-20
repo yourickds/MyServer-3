@@ -102,6 +102,9 @@ namespace MyServer.UserControls
             }
 
             Certificate.Delete(SelectedDomain.Name);
+            // Удаляем конфиги .conf.tpl и .conf
+            DeleteConfigsDomain.Invoke(SelectedDomain);
+            DomainConfigs.Delete(SelectedDomain);
 
             SelectedDomain.Name = _viewModel.Name;
             SelectedDomain.DocumentRoot = _viewModel.DocumentRoot;

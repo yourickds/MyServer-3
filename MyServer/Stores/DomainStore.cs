@@ -48,6 +48,8 @@ namespace MyServer.Stores
             GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
 
             RefreshDomains();
+
+            DomainConfigs.Create(domain);
         }
 
         public void UpdateDomain(Domain domain)
@@ -65,6 +67,8 @@ namespace MyServer.Stores
             GenerateConfig.Invoke("userdata/configs/Apache24/vhosts/" + domain.Name + ".conf.tpl");
 
             RefreshDomains();
+
+            DomainConfigs.Create(domain);
         }
 
         public void DeleteDomain(int id)
@@ -75,7 +79,8 @@ namespace MyServer.Stores
                 Certificate.Delete(domain.Name);
                 // Удаляем конфиги .conf.tpl и .conf
                 DeleteConfigsDomain.Invoke(domain);
-             
+                DomainConfigs.Delete(domain);
+
                 _dbContext.Domains.Remove(domain);
                 _dbContext.SaveChanges();
 
