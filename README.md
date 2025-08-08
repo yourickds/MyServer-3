@@ -33,6 +33,7 @@
 Перед установкой сервера необходимо установить:
 1. Для PHP 5.6: [Microsoft Visual C++ Redistributable 2012](https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe)
 2. Для PHP ≥7.0: [Microsoft Visual C++ Redistributable 2015-2022](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+3. Для MySQL [.NET 8.0 Desktop Runtime](https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.19/windowsdesktop-runtime-8.0.19-win-x64.exe)
 
 ### Процесс установки
 1. Установите необходимые зависимости (см. выше)
